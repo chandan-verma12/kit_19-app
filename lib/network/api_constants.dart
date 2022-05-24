@@ -1,0 +1,67 @@
+class ApiConstants {
+  static String MAP_KEY = "AIzaSyAA6804BKoIzfHP-db6QGvAuq1f2FHY3BE";
+  static String BASE_URL = "http://services.kit19.com/";
+  static String LOGIN = "Admin/GetDeviceToken";
+  static String CHECK_EMAIL = "Admin/CheckUserEmail";
+  static String SIGN_UP = "Admin/RegisterUser";
+  static String RE_LOGIN = "Admin/ResetLogin";
+  static String FORGOT_PASSWORD = "Admin/ForgotPassword";
+  static String LOGOUT = "Admin/Logout";
+  static String HOME_DATA = "UserCRM/GetCalendarView";
+  static String SEND_OTP = "Admin/SendOTP";
+  static String COUNTRY_LIST = "Common/GetCountryIDByCode";
+  static String COUNTRY_TIME_ZONE = "Common/GetTimeZoneByID";
+  static String GET_BALANCE = "Common/GetBalance";
+  static String GET_OUTCOMES = "UserCRM/OutcomeListByTaskId";
+  static String MARK_AS_COMPLETE = "UserCRM/MarkAsCompletedById";
+  static String TASK_DETAILS = "UserCRM/TaskDetailById";
+  static String SEARCH_CONTACT = "Common/GetContactSuggestions";
+  static String GET_COLLABORATORS = "UserCRM/GetCollaborators";
+  static String GET_COLLEAGUE_LIST = "UserCRM/GetColleagueList";
+  static String SAVE_TASK_APPOINTMENT = "UserCRM/SaveTaskDetail";
+  static String GET_CALL_LOG = "UserCRM/GetCallLogDetailById";
+  static String SCHEDULE_CALL = "UserCRM/SaveCallSchedule";
+  static String GET_FOLLOWUP_DETAILS = "UserCRM/GetFollowupDetailById";
+  static String GET_TASK_TYPES = "UserCRM/GetTaskTypeLisByUserId";
+  static String GET_FOLLOW_UPS = "UserCRM/GetFollowup";
+  static String GET_FOLLOWUP_PRODUCTS = "UserCRM/ProductSuggestions";
+  static String SAVE_FOLLOWUP = "UserCRM/SaveFollowup";
+  static String DELETE_TASK_APPOINTMENT = "UserCRM/DeleteTaskDetailById";
+  static String UPLOAD_FILE = "UserCRM/SaveTaskAttachment";
+  static String DELETE_FILE = "UserCRM/RemoveAttachmentById";
+  static String Lead_List = "UserCRM/GetLeadListNew";
+}
+
+class ApiRequest {
+  static const int LOGIN = 1;
+  static const int CHECK_EMAIL = 2;
+  static const int SIGN_UP = 3;
+  static const int RE_LOGIN = 4;
+  static const int FORGOT_PASSWORD = 5;
+  static const int LOGOUT = 6;
+  static const int HOME_DATA = 7;
+  static const int SEND_OTP = 8;
+  static const int COUNTRY_LIST = 9;
+  static const int COUNTRY_TIME_ZONE = 10;
+  static const int GET_BALANCE = 11;
+  static const int GET_OUTCOMES = 12;
+  static const int MARK_AS_COMPLETE = 13;
+  static const int TASK_DETAILS = 14;
+  static const int SEARCH_CONTACT = 15;
+  static const int GET_COLLABORATORS = 16;
+  static const int GET_ADDRESSS_FROM_LAT_LNG = 1;
+  static const int GET_PLACE_DETAILS = 2;
+  static const int SAVE_TASK_APPOINTMENT = 17;
+  static const int GET_CALL_LOG = 18;
+  static const int SCHEDULE_CALL = 19;
+  static const int GET_FOLLOWUP_DETAILS = 20;
+  static const int GET_TASK_TYPES = 21;
+  static const int GET_COLLEAGUE_LIST = 22;
+  static const int GET_FOLLOW_UPS = 23;
+  static const int GET_FOLLOWUP_PRODUCTS = 24;
+  static const int SAVE_FOLLOWUP = 25;
+  static const int DELETE_TASK_APPOINTMENT = 26;
+  static const int UPLOAD_FILE = 27;
+  static const int DELETE_FILE = 28;
+  static const int Lead_List = 29;
+}
