@@ -41,7 +41,7 @@ class _TaskDetailsView extends BaseClass<TaskDetailsView>
     super.initState();
     _etRemark = TextEditingController();
     WidgetsFlutterBinding.ensureInitialized();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callDetailsApi();
     });
   }

@@ -2,7 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:kit_19/utils/app_theme.dart';
 
-import '../widgets/custom_form.dart';
+import 'forms/main_fields.dart';
 
 class NewLead extends StatefulWidget {
   const NewLead({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _NewLeadState extends State<NewLead> {
                       height: 140,
                       width: 150,
                       child: Image.asset(
-                        'assets/images/profile.png',
+                        'assets/icons/user.png',
                       ),
                     ),
                   ),
@@ -104,10 +104,7 @@ class _NewLeadState extends State<NewLead> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: MyCustomForm(),
-            ),
+            MyCustomForm(),
           ],
         ),
       ),

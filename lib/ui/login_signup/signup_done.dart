@@ -34,7 +34,7 @@ class _SignupDone extends BaseClass<SignupDone> implements ApiResponse {
     _etCountry = TextEditingController();
     _etTimeZone = TextEditingController();
     WidgetsFlutterBinding.ensureInitialized();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Future.delayed(const Duration(milliseconds: 100), () {
         getCountryList();
       });

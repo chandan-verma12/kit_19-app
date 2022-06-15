@@ -24,9 +24,9 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPassword extends BaseClass<ForgotPassword> implements ApiResponse {
   var isValidEmail = true, isValidMobile = true;
-  late TextEditingController _etEmail, _etMobile,textController;
+  late TextEditingController _etEmail, _etMobile, textController;
   var countryCode = "+91", countryFlag = "";
-      late List<Country> _countryList;
+  late List<Country> _countryList;
   late List<Country> _tempCountryList;
 
   @override
@@ -34,7 +34,7 @@ class _ForgotPassword extends BaseClass<ForgotPassword> implements ApiResponse {
     super.initState();
     textController = TextEditingController();
     countryFlag = countryCodeToEmoji("IN");
-        _countryList =
+    _countryList =
         countryCodes.map((country) => Country.fromJson(country)).toList();
     _tempCountryList =
         countryCodes.map((country) => Country.fromJson(country)).toList();
@@ -239,7 +239,8 @@ class _ForgotPassword extends BaseClass<ForgotPassword> implements ApiResponse {
                       Text(Strings.forgotPassMsg),
                       getVerticalGap(height: 50),
                       etEmailAddress,
-                      getVerticalGap(),etMobile,
+                      getVerticalGap(),
+                      etMobile,
                       getVerticalGap(height: 50),
                       getPassAndCancel,
                       getVerticalGap(height: 30),
@@ -249,9 +250,9 @@ class _ForgotPassword extends BaseClass<ForgotPassword> implements ApiResponse {
         ));
   }
 
-    bool validateInput() {
+  bool validateInput() {
     bool valid = true;
-        bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+    bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
         .hasMatch(_etEmail.text.trim());
     if (_etEmail.text.isEmpty) {
       valid = false;
@@ -267,7 +268,7 @@ class _ForgotPassword extends BaseClass<ForgotPassword> implements ApiResponse {
     }
 
     if (!valid) {
-showErrorDialog(Strings.error, Strings.enterValidDetails);
+      showErrorDialog(Strings.error, Strings.enterValidDetails);
     }
 
     return valid;
@@ -283,21 +284,22 @@ showErrorDialog(Strings.error, Strings.enterValidDetails);
         builder: (context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-                return DraggableScrollableSheet(
-                    initialChildSize: 0.65,
-                    minChildSize: 0.25,
-                    maxChildSize: 0.80,
-                    expand: false,
-                    builder:
-                        (BuildContext context,
-                        ScrollController scrollController) {
-                      return Column(children:[
-                        Icon(
-                          Icons.remove,
-                          color: Colors.grey[600],
-                        ),
-                        Padding(padding: const EdgeInsets.symmetric(
-                            horizontal: 18, vertical: 10), child: TextField(
+            return DraggableScrollableSheet(
+                initialChildSize: 0.65,
+                minChildSize: 0.25,
+                maxChildSize: 0.80,
+                expand: false,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Column(children: [
+                    Icon(
+                      Icons.remove,
+                      color: Colors.grey[600],
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18, vertical: 10),
+                        child: TextField(
                             controller: textController,
                             decoration: InputDecoration(
                               hintText: Strings.search,
@@ -312,52 +314,49 @@ showErrorDialog(Strings.error, Strings.enterValidDetails);
                                 borderSide: const BorderSide(
                                     color: AppTheme.colorPrimary),
                               ),
-                              prefixIcon: const Icon(
-                                  Icons.search, color: AppTheme.colorPrimary),
+                              prefixIcon: const Icon(Icons.search,
+                                  color: AppTheme.colorPrimary),
                             ),
                             onChanged: (value) {
                               setState(() {
                                 _buildSearchList(value);
                               });
                             })),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: _countryList.length,
-                            itemBuilder: (_, index) {
-                              return TextButton(
-                                  style: TextButton.styleFrom(
-                                      primary: AppTheme.colorRipple,
-                                      backgroundColor: AppTheme.white),
-                                  onPressed: () {
-                                    Navigator.pop(context, _countryList[index])
-                                  },
-                                  child: Row(
-                                    children: [
-                                      getHorizontalGap(width: 10),
-                                      Text(
-                                        countryCodeToEmoji(
-                                            _countryList[index].iso2Cc!),
-                                        style: styleRegular(fontSize: 25),
-                                      ),
-                                      getHorizontalGap(),
-                                      Flexible(
-                                          child: Text(
-                                            "+${_countryList[index]
-                                                .e164Cc}  ${_countryList[index]
-                                                .name}",
-                                            style: styleRegularColor(
-                                                AppTheme.black,
-                                                fontSize: 14),
-                                          ))
-                                    ],
-                                  ));
-                            },
-                          ),
-                        )
-                      ]);
-                    });
-              });
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: _countryList.length,
+                        itemBuilder: (_, index) {
+                          return TextButton(
+                              style: TextButton.styleFrom(
+                                  primary: AppTheme.colorRipple,
+                                  backgroundColor: AppTheme.white),
+                              onPressed: () {
+                                Navigator.pop(context, _countryList[index]);
+                              },
+                              child: Row(
+                                children: [
+                                  getHorizontalGap(width: 10),
+                                  Text(
+                                    countryCodeToEmoji(
+                                        _countryList[index].iso2Cc!),
+                                    style: styleRegular(fontSize: 25),
+                                  ),
+                                  getHorizontalGap(),
+                                  Flexible(
+                                      child: Text(
+                                    "+${_countryList[index].e164Cc}  ${_countryList[index].name}",
+                                    style: styleRegularColor(AppTheme.black,
+                                        fontSize: 14),
+                                  ))
+                                ],
+                              ));
+                        },
+                      ),
+                    )
+                  ]);
+                });
+          });
         });
     if (country != null) {
       setState(() {
@@ -373,8 +372,10 @@ showErrorDialog(Strings.error, Strings.enterValidDetails);
   _buildSearchList(String userSearchTerm) {
     _countryList.clear();
     for (int i = 0; i < _tempCountryList.length; i++) {
-      if (_tempCountryList[i].name!.toLowerCase().contains(
-          userSearchTerm.toLowerCase())) {
+      if (_tempCountryList[i]
+          .name!
+          .toLowerCase()
+          .contains(userSearchTerm.toLowerCase())) {
         _countryList.add(_tempCountryList[i]);
       }
     }
@@ -382,24 +383,24 @@ showErrorDialog(Strings.error, Strings.enterValidDetails);
 
   void getPassword() {
     hideKeyBoard();
-    if(validateInput()){
-              showProgress();
+    if (validateInput()) {
+      showProgress();
       final Map<String, dynamic> params = {
         'Status': '',
         'Message': '',
-        'Details':  {
-                                                      "CountryCode" : countryCode,
-               		         "UsernameOrEmail" : _etEmail.text.trim(),
-                                                       "MobileNo": _etMobile.text.trim(),
-                         "Url": AppConstants.PARAM_URL,
-	}
+        'Details': {
+          "CountryCode": countryCode,
+          "UsernameOrEmail": _etEmail.text.trim(),
+          "MobileNo": _etMobile.text.trim(),
+          "Url": AppConstants.PARAM_URL,
+        }
       };
       ApiCall.makeApiCall(ApiRequest.FORGOT_PASSWORD, params, Method.POST,
           ApiConstants.FORGOT_PASSWORD, this);
     }
   }
 
-    @override
+  @override
   void onError(String errorResponse, int responseCode, int requestCode) {
     debugPrint(
         "Msg: ${errorResponse} Response Code ${responseCode} Request Code ${requestCode}");
@@ -413,12 +414,11 @@ showErrorDialog(Strings.error, Strings.enterValidDetails);
         "Data: ${response} Response Code ${responseCode} Request Code ${requestCode}");
     hideProgress(changestatusBarColor: false);
     var jsonData = json.decode(response);
-showErrorDialog(Strings.success, jsonData["Details"],bContext: context);
+    showErrorDialog(Strings.success, jsonData["Details"], bContext: context);
   }
 
   @override
   void onTokenExpired(String errorResponse, int responseCode, int requestCode) {
     // TODO: implement onTokenExpired
   }
-
 }

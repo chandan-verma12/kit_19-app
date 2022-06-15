@@ -53,8 +53,6 @@ class Details {
   String? sipPwd;
   String? fcmToken;
 
-
-
   Details(
       {this.token,
       this.url,
@@ -73,8 +71,6 @@ class Details {
       this.sipUser,
       this.sipPwd,
       this.fcmToken});
-
-  
 
   Details.fromJson(Map<String, dynamic> json) {
     token = json["Token"];

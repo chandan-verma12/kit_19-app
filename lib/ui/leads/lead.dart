@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kit_19/ui/leads/components/new_lead.dart';
-import 'package:kit_19/ui/leads/lead_body.dart';
+import 'package:kit_19/ui/add_new_lead/new_lead.dart';
+
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:kit_19/ui/leads/lead_details/lead_widgets.dart';
+import 'package:kit_19/ui/leads/widgets/lead_body.dart';
 import 'package:kit_19/ui/search/search_screen.dart';
 
 import 'dart:io';
@@ -38,11 +40,6 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        getBalance();
-      });
-    });
   }
 
   void showLogoutDialog() {
@@ -513,8 +510,15 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
                       ],
                     )))),
         floatingActionButton: SpeedDial(
-          animatedIcon: AnimatedIcons.add_event,
           spaceBetweenChildren: 10,
+          icon: Icons.add,
+          activeIcon: Icons.cancel_outlined,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(50),
+            topRight: Radius.circular(50),
+            bottomLeft: Radius.circular(50),
+          )),
           children: [
             SpeedDialChild(
               child: Icon(Icons.upload),
@@ -534,7 +538,7 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
             ),
           ],
         ),
-        body: WillPopScope(child: LeadBody(), onWillPop: onWillPop));
+        body: WillPopScope(child: LeadListAPi(), onWillPop: onWillPop));
   }
 
   Future<bool> onWillPop() {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:kit_19/model/LeadModel.dart';
+import 'package:kit_19/model/lead_data.dart';
 import '../model/login_data.dart';
 import '../model/user_data.dart';
 import 'app_theme.dart';
@@ -84,6 +86,23 @@ class AppUtils {
     UserDetails.fcmToken = v.details!.fcmToken!;
     UserDetails.userName = v.details!.userName!;
   }
+
+  // static setLeadData(LeadListModel u) {
+  //   LeadDetails.id = u.details!.data!.id!;
+  //   LeadDetails.createdDate = u.details!.data!.createdDate!;
+  //   LeadDetails.csvEmailId = u.details!.data!.csvEmailId!;
+  //   LeadDetails.csvMobileNo = u.details!.data!.csvMobileNo!;
+  //   LeadDetails.currentScore = u.details!.data!.currentScore!;
+  //   LeadDetails.htmlStatus = u.details!.data!.htmlStatus!;
+  //   LeadDetails.followupDate = u.details!.data!.followupDate!;
+  //   LeadDetails.image = u.details!.data!.image!;
+  //   LeadDetails.personName = u.details!.data!.personName!;
+  //   LeadDetails.leadNo = u.details!.data!.leadNo!;
+  //   LeadDetails.profitLoss = u.details!.data!.profitLoss!;
+  //   LeadDetails.thresholdColor = u.details!.data!.thresholdColor!;
+  //   LeadDetails.latitude = u.details!.data!.latitude!;
+  //   LeadDetails.longitude = u.details!.data!.longitude!;
+  // }
 
   static void hideKeyBoard(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);

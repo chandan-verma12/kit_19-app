@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kit_19/ui/enquiries/enquiries.dart';
+import 'package:kit_19/ui/enquiries/enquiry.dart';
+
 import 'package:kit_19/ui/leads/lead.dart';
 
 import 'dart:io';
@@ -198,7 +199,12 @@ class _Dashboard extends BaseClass<Dashboard> implements ApiResponse {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 primary: AppTheme.colorPrimary,
                                 backgroundColor: AppTheme.white),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => Dashboard()));
+                            },
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),

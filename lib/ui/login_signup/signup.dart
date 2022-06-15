@@ -46,7 +46,8 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
   final TextEditingController textController = TextEditingController();
   var countryCode = "+91",
       resendSecs = 0,
-      countryFlag = "",enteredOtp="",
+      countryFlag = "",
+      enteredOtp = "",
       uniqueOtp = 0;
   Timer? timer;
 
@@ -84,8 +85,8 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
     _etMobile = TextEditingController();
     _etMobile.addListener(() {
       setState(() {
-        isOtpSend=false;
-        isValidMobile=true;
+        isOtpSend = false;
+        isValidMobile = true;
       });
     });
     _etMobile.addListener(() {
@@ -111,10 +112,7 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
   Widget build(BuildContext context) {
     changeSystemUiColor(statusBarColor: Colors.transparent);
 
-    final emailId = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as String;
+    final emailId = ModalRoute.of(context)!.settings.arguments as String;
     _etEmail.text = emailId;
 
     final etEmailAddress = TextField(
@@ -226,8 +224,8 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
           fillColor: AppTheme.white,
           filled: true,
           isDense: true,
-          prefixIconConstraints: const BoxConstraints(
-              minWidth: 0, minHeight: 0),
+          prefixIconConstraints:
+              const BoxConstraints(minWidth: 0, minHeight: 0),
           focusedBorder: getBorder(
               isValidMobile ? AppTheme.colorDarkGrey : AppTheme.colorRed),
           enabledBorder: getBorder(
@@ -430,11 +428,11 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
       ),
       onComplete: (output) {
         debugPrint(output);
-        enteredOtp=output;
+        enteredOtp = output;
       },
       onChange: (v) {
         debugPrint(v);
-        enteredOtp=v;
+        enteredOtp = v;
       },
     );
 
@@ -459,12 +457,12 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
               style: styleMediumColor(AppTheme.colorPrimary),
             )),
         const Spacer(),
-
-        resendSecs > 1 ? Text(
-          "$resendSecs sec Left",
-          style: styleRegular(fontSize: 12),
-        ) : Container(),
-
+        resendSecs > 1
+            ? Text(
+                "$resendSecs sec Left",
+                style: styleRegular(fontSize: 12),
+              )
+            : Container(),
       ],
     );
 
@@ -485,11 +483,11 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
             primary: AppTheme.white,
             backgroundColor: AppTheme.colorPrimary),
         onPressed: () {
-            validateOtp();
+          validateOtp();
         });
 
     final verifyView =
-    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       getVerticalGap(),
       Text(Strings.otpMsg, style: styleMedium()),
       getVerticalGap(height: 10),
@@ -557,21 +555,22 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
         builder: (context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-                return DraggableScrollableSheet(
-                    initialChildSize: 0.65,
-                    minChildSize: 0.25,
-                    maxChildSize: 0.80,
-                    expand: false,
-                    builder:
-                        (BuildContext context,
-                        ScrollController scrollController) {
-                      return Column(children: <Widget>[
-                        Icon(
-                          Icons.remove,
-                          color: Colors.grey[600],
-                        ),
-                        Padding(padding: const EdgeInsets.symmetric(
-                            horizontal: 18, vertical: 10), child: TextField(
+            return DraggableScrollableSheet(
+                initialChildSize: 0.65,
+                minChildSize: 0.25,
+                maxChildSize: 0.80,
+                expand: false,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Column(children: <Widget>[
+                    Icon(
+                      Icons.remove,
+                      color: Colors.grey[600],
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18, vertical: 10),
+                        child: TextField(
                             controller: textController,
                             decoration: InputDecoration(
                               hintText: Strings.search,
@@ -586,58 +585,55 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
                                 borderSide: const BorderSide(
                                     color: AppTheme.colorPrimary),
                               ),
-                              prefixIcon: const Icon(
-                                  Icons.search, color: AppTheme.colorPrimary),
+                              prefixIcon: const Icon(Icons.search,
+                                  color: AppTheme.colorPrimary),
                             ),
                             onChanged: (value) {
                               setState(() {
                                 _buildSearchList(value);
                               });
                             })),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: _countryList.length,
-                            itemBuilder: (_, index) {
-                              return TextButton(
-                                  style: TextButton.styleFrom(
-                                      primary: AppTheme.colorRipple,
-                                      backgroundColor: AppTheme.white),
-                                  onPressed: () {
-                                    Navigator.pop(context, _countryList[index])
-                                  },
-                                  child: Row(
-                                    children: [
-                                      getHorizontalGap(width: 10),
-                                      Text(
-                                        countryCodeToEmoji(
-                                            _countryList[index].iso2Cc!),
-                                        style: styleRegular(fontSize: 25),
-                                      ),
-                                      getHorizontalGap(),
-                                      Flexible(
-                                          child: Text(
-                                            "+${_countryList[index]
-                                                .e164Cc}  ${_countryList[index]
-                                                .name}",
-                                            style: styleRegularColor(
-                                                AppTheme.black,
-                                                fontSize: 14),
-                                          ))
-                                    ],
-                                  ));
-                            },
-                          ),
-                        )
-                      ]);
-                    });
-              });
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: _countryList.length,
+                        itemBuilder: (_, index) {
+                          return TextButton(
+                              style: TextButton.styleFrom(
+                                  primary: AppTheme.colorRipple,
+                                  backgroundColor: AppTheme.white),
+                              onPressed: () {
+                                Navigator.pop(context, _countryList[index]);
+                              },
+                              child: Row(
+                                children: [
+                                  getHorizontalGap(width: 10),
+                                  Text(
+                                    countryCodeToEmoji(
+                                        _countryList[index].iso2Cc!),
+                                    style: styleRegular(fontSize: 25),
+                                  ),
+                                  getHorizontalGap(),
+                                  Flexible(
+                                      child: Text(
+                                    "+${_countryList[index].e164Cc}  ${_countryList[index].name}",
+                                    style: styleRegularColor(AppTheme.black,
+                                        fontSize: 14),
+                                  ))
+                                ],
+                              ));
+                        },
+                      ),
+                    )
+                  ]);
+                });
+          });
         });
     if (country != null) {
       setState(() {
         countryCode = "+${country.e164Cc}";
         countryFlag = countryCodeToEmoji(country.iso2Cc!);
-        isOtpSend=false;
+        isOtpSend = false;
       });
       _countryList.clear();
       _countryList.addAll(_tempCountryList);
@@ -648,8 +644,10 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
   _buildSearchList(String userSearchTerm) {
     _countryList.clear();
     for (int i = 0; i < _tempCountryList.length; i++) {
-      if (_tempCountryList[i].name!.toLowerCase().contains(
-          userSearchTerm.toLowerCase())) {
+      if (_tempCountryList[i]
+          .name!
+          .toLowerCase()
+          .contains(userSearchTerm.toLowerCase())) {
         _countryList.add(_tempCountryList[i]);
       }
     }
@@ -688,9 +686,8 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
           'OTP': uniqueOtp
         }
       };
-      ApiCall.makeApiCall(
-          ApiRequest.SEND_OTP, params, Method.POST, ApiConstants.SEND_OTP,
-          this);
+      ApiCall.makeApiCall(ApiRequest.SEND_OTP, params, Method.POST,
+          ApiConstants.SEND_OTP, this);
     }
   }
 
@@ -759,41 +756,41 @@ class _Signup extends BaseClass<Signup> implements ApiResponse {
     setState(() {
       isOtpSend = true;
     });
-    }
+  }
 
   void validateOtp() {
-    if(enteredOtp.isEmpty || enteredOtp.length<6){
-showErrorDialog(Strings.error,Strings.enter6DigitOtp);
-    }else{
-      if(enteredOtp==uniqueOtp.toString()){
-          if(validateInput()){
-            final Map<String,dynamic> params={
-        'Status': '',
-        'Message': '',
-        'Details': {
-                'URL': AppConstants.PARAM_URL,
-                'UserName': _etUserName.text.trim(),
-                'FName': _etFName.text.trim(),
-                'LName': _etLName.text.trim(),
-                'Email': _etEmail.text.trim(),
-                'Mobile': _etMobile.text.trim(),
-                'CompanyName': _etCompanyName.text.trim(),
-                'CountryCode': countryCode,
-                'City': '',
-                'State':'',
-                'DefaultHtml':'',
-                'Officename': '',
-                'Source':'',
-                'Medium':'',
-                'Campaign':'',
-                'UniqueID': 0
-    }
-      };
-      if (timer != null) timer?.cancel();
-      Navigator.pushNamed(context, SignupDone.tag,arguments: params);
-          }
-      }else{
-showErrorDialog(Strings.error,Strings.enterValidOtp);
+    if (enteredOtp.isEmpty || enteredOtp.length < 6) {
+      showErrorDialog(Strings.error, Strings.enter6DigitOtp);
+    } else {
+      if (enteredOtp == uniqueOtp.toString()) {
+        if (validateInput()) {
+          final Map<String, dynamic> params = {
+            'Status': '',
+            'Message': '',
+            'Details': {
+              'URL': AppConstants.PARAM_URL,
+              'UserName': _etUserName.text.trim(),
+              'FName': _etFName.text.trim(),
+              'LName': _etLName.text.trim(),
+              'Email': _etEmail.text.trim(),
+              'Mobile': _etMobile.text.trim(),
+              'CompanyName': _etCompanyName.text.trim(),
+              'CountryCode': countryCode,
+              'City': '',
+              'State': '',
+              'DefaultHtml': '',
+              'Officename': '',
+              'Source': '',
+              'Medium': '',
+              'Campaign': '',
+              'UniqueID': 0
+            }
+          };
+          if (timer != null) timer?.cancel();
+          Navigator.pushNamed(context, SignupDone.tag, arguments: params);
+        }
+      } else {
+        showErrorDialog(Strings.error, Strings.enterValidOtp);
       }
     }
   }
@@ -802,5 +799,4 @@ showErrorDialog(Strings.error,Strings.enterValidOtp);
   void onTokenExpired(String errorResponse, int responseCode, int requestCode) {
     // TODO: implement onTokenExpired
   }
-
 }

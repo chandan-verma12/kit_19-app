@@ -27,15 +27,12 @@ class _CustomDropDownState extends State<CustomDropDown> {
       child: DropdownButton2(
         isExpanded: true,
         hint: Row(
-          children: const [
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
+          children: [
+            Container(
               child: Text(
                 'All Lead',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   color: Colors.black,
                 ),
                 // overflow: TextOverflow.ellipsis,
@@ -67,7 +64,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
         iconSize: 25,
         iconEnabledColor: Colors.black,
         iconDisabledColor: Colors.grey,
-        buttonHeight: 50,
+        buttonHeight: 30,
         buttonWidth: 310,
         buttonPadding: const EdgeInsets.only(left: 14, right: 14),
         buttonDecoration: BoxDecoration(color: Colors.transparent),

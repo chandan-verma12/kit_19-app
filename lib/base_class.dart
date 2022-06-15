@@ -503,16 +503,23 @@ abstract class BaseClass<T extends StatefulWidget> extends State<T> {
     );
   }
 
-  PreferredSizeWidget getAppBar(String title,
-      {Color iconColor = AppTheme.black,
-      Color bgColor = AppTheme.white,
-      double fontSize = 13}) {
+  PreferredSizeWidget getAppBar(
+    String title, {
+    Color iconColor = AppTheme.black,
+    Color bgColor = AppTheme.white,
+  }) {
     return AppBar(
         iconTheme: IconThemeData(color: iconColor),
         centerTitle: false,
         title: Text(title,
-            style: styleRegularColor(iconColor, fontSize: fontSize)),
+            style: styleRegularColor(
+              iconColor,
+            )),
         backgroundColor: bgColor,
+        leading: IconButton(
+          onPressed: Navigator.of(context).pop,
+          icon: Icon(Icons.arrow_back_ios),
+        ),
         elevation: 0.0);
   }
 

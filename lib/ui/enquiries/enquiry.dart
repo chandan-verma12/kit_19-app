@@ -1,8 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kit_19/ui/enquiries/enquiry_body.dart';
-import 'package:kit_19/ui/leads/lead_body.dart';
+import 'package:kit_19/ui/add_new_lead/new_lead.dart';
+
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:kit_19/ui/enquiries/enq_list.dart';
+import 'package:kit_19/ui/leads/lead_details/lead_widgets.dart';
+import 'package:kit_19/ui/leads/widgets/lead_body.dart';
+import 'package:kit_19/ui/search/search_screen.dart';
 
 import 'dart:io';
 import '../../base_class.dart';
@@ -36,11 +41,6 @@ class _Enquiry extends BaseClass<Enquiry> implements ApiResponse {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        getBalance();
-      });
-    });
   }
 
   void showLogoutDialog() {
@@ -92,14 +92,17 @@ class _Enquiry extends BaseClass<Enquiry> implements ApiResponse {
               _scafoldKey.currentState?.openDrawer();
             },
           ),
-          title: const Text('Enquiries'),
+          title: const Text('Enquiry'),
           backgroundColor: AppTheme.colorPrimary,
           elevation: 0,
           actions: [
             IconButton(
               padding: const EdgeInsets.symmetric(vertical: 15),
               icon: Image.asset("assets/icons/search.png"),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (context) => SearchScreen()));
+              },
             ),
             IconButton(
               padding: const EdgeInsets.symmetric(vertical: 13),
@@ -507,122 +510,36 @@ class _Enquiry extends BaseClass<Enquiry> implements ApiResponse {
                             ))
                       ],
                     )))),
-        // bottomNavigationBar: Container(
-        //     padding: EdgeInsets.only(bottom: Platform.isIOS ? 20 : 0),
-        //     decoration: const BoxDecoration(
-        //       color: AppTheme.colorPrimary,
-        //       borderRadius: BorderRadius.only(
-        //           topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-        //     ),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //       children: [
-        //         TextButton(
-        //             style: TextButton.styleFrom(
-        //                 padding: EdgeInsets.zero,
-        //                 minimumSize: Size.zero,
-        //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        //                 primary: AppTheme.white,
-        //                 backgroundColor: AppTheme.colorPrimary),
-        //             onPressed: () {},
-        //             child: const Padding(
-        //               padding: EdgeInsets.all(10),
-        //               child: Image(
-        //                 image: AssetImage(
-        //                   'assets/icons/home.png',
-        //                 ),
-        //                 color: AppTheme.white,
-        //                 height: 30,
-        //                 width: 30,
-        //               ),
-        //             )),
-        //         TextButton(
-        //             style: TextButton.styleFrom(
-        //                 padding: EdgeInsets.zero,
-        //                 minimumSize: Size.zero,
-        //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        //                 primary: AppTheme.white,
-        //                 backgroundColor: AppTheme.colorPrimary),
-        //             onPressed: () {},
-        //             child: const Padding(
-        //               padding: EdgeInsets.all(10),
-        //               child: Image(
-        //                 image: AssetImage(
-        //                   'assets/icons/lead.png',
-        //                 ),
-        //                 color: AppTheme.white,
-        //                 height: 30,
-        //                 width: 30,
-        //               ),
-        //             )),
-        //         TextButton(
-        //             style: TextButton.styleFrom(
-        //                 padding: EdgeInsets.zero,
-        //                 minimumSize: Size.zero,
-        //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        //                 primary: AppTheme.white,
-        //                 backgroundColor: AppTheme.colorPrimary),
-        //             onPressed: () {},
-        //             child: const Padding(
-        //               padding: EdgeInsets.all(10),
-        //               child: Image(
-        //                 image: AssetImage(
-        //                   'assets/icons/appointment_home.png',
-        //                 ),
-        //                 color: AppTheme.white,
-        //                 height: 30,
-        //                 width: 30,
-        //               ),
-        //             )),
-        //         TextButton(
-        //             style: TextButton.styleFrom(
-        //                 padding: EdgeInsets.zero,
-        //                 minimumSize: Size.zero,
-        //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        //                 primary: AppTheme.white,
-        //                 backgroundColor: AppTheme.colorPrimary),
-        //             onPressed: () {},
-        //             child: const Padding(
-        //               padding: EdgeInsets.all(10),
-        //               child: Image(
-        //                 image: AssetImage(
-        //                   'assets/icons/task.png',
-        //                 ),
-        //                 color: AppTheme.white,
-        //                 height: 30,
-        //                 width: 30,
-        //               ),
-        //             )),
-        //         TextButton(
-        //             style: TextButton.styleFrom(
-        //                 padding: EdgeInsets.zero,
-        //                 minimumSize: Size.zero,
-        //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        //                 primary: AppTheme.white,
-        //                 backgroundColor: AppTheme.colorPrimary),
-        //             onPressed: () {},
-        //             child: const Padding(
-        //               padding: EdgeInsets.all(10),
-        //               child: Image(
-        //                 image: AssetImage(
-        //                   'assets/icons/settings.png',
-        //                 ),
-        //                 color: AppTheme.white,
-        //                 height: 30,
-        //                 width: 30,
-        //               ),
-        //             ))
-        //       ],
-        //     )),
-        floatingActionButton: FloatingActionButton(
-          elevation: 0.0,
-          child: Icon(Icons.add),
-          backgroundColor: AppTheme.colorPrimary,
-          hoverElevation: 3,
-          onPressed: () {},
-          isExtended: true,
+        floatingActionButton: SpeedDial(
+          spaceBetweenChildren: 10,
+          icon: Icons.add,
+          activeIcon: Icons.cancel_outlined,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(50),
+            topRight: Radius.circular(50),
+            bottomLeft: Radius.circular(50),
+          )),
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.upload),
+              label: 'Import from XLS',
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.download),
+              label: 'Export',
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.group),
+              label: 'New Enquiry',
+              onTap: () {
+                // Navigator.push(context,
+                //     CupertinoPageRoute(builder: (context) => NewLead()));
+              },
+            ),
+          ],
         ),
-        body: WillPopScope(child: EnquiryBody(), onWillPop: onWillPop));
+        body: WillPopScope(child: EnquiryListAPi(), onWillPop: onWillPop));
   }
 
   Future<bool> onWillPop() {
