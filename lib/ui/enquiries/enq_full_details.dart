@@ -1,10 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:kit_19/model/enq_full_details_model.dart';
-import 'package:kit_19/ui/leads/lead_details/lead_details.dart';
-import 'package:kit_19/ui/leads/lead_details/lead_details_body.dart';
+import 'package:kit_19/model/enquiry_details.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_whatsapp.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_mail.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_sms.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_voice.dart';
 
 import '../../../utils/app_theme.dart';
 import '../../model/user_data.dart';
@@ -16,20 +21,21 @@ class EnquiryFullDetails extends StatelessWidget {
   final int id;
 
   var myMenuItems = <String>[
-    'Add',
     'Edit',
+    'Add/Merge to Lead',
     'Delete',
   ];
 
   void onSelect(item) {
     switch (item) {
-      case 'Home':
+      case 'Edit':
         print('Add clicked');
+
         break;
-      case 'Profile':
+      case 'Add/Merge to Lead':
         print('Edit clicked');
         break;
-      case 'Setting':
+      case 'Delete':
         print('Delete clicked');
         break;
     }
@@ -59,8 +65,7 @@ class EnquiryFullDetails extends StatelessWidget {
         ],
       ),
       body: EnquiryFullDetailsPage(id: id),
-      floatingActionButton: LeadFullDetailsFAButton(),
-      bottomNavigationBar: LeadFullDetailsBottomNavBar(),
+      bottomNavigationBar: EnqFullDetailsBottomNavBar(),
     );
   }
 }
@@ -133,8 +138,7 @@ class _EnquiryFullDetailsPageState extends State<EnquiryFullDetailsPage> {
                                   .toString(),
                               createon: snapshot.data!.details![0].createdDate
                                   .toString(),
-                              crtby: snapshot.data!.details![0].createdBy
-                                  .toString(),
+                              crtby: UserDetails.fName,
                               raddr: snapshot
                                   .data!.details![0].residentialAddress
                                   .toString(),
@@ -156,6 +160,7 @@ class _EnquiryFullDetailsPageState extends State<EnquiryFullDetailsPage> {
                           } else if (snapshot.hasError) {
                             return Text("${snapshot.error}");
                           }
+
                           // By default, show a loading spinner
                           return Center(child: CircularProgressIndicator());
                         },
@@ -264,6 +269,18 @@ class EnqFullDetailsPageApi extends StatefulWidget {
 
 class _EnqFullDetailsPageApiState extends State<EnqFullDetailsPageApi> {
   @override
+  void initState() {
+    super.initState();
+    EnquiryDetails.email1 = widget.email1;
+    EnquiryDetails.email2 = widget.email2;
+    EnquiryDetails.email3 = widget.email3;
+    EnquiryDetails.mobile1 = widget.mob1;
+    EnquiryDetails.mobile2 = widget.mob2;
+    EnquiryDetails.mobile3 = widget.mob3;
+    EnquiryDetails.name = widget.name;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -293,9 +310,22 @@ class _EnqFullDetailsPageApiState extends State<EnqFullDetailsPageApi> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Flexible(
+                //   child: new Container(
+                //     padding: new EdgeInsets.only(right: 5.0),
+                //     child: new Text(
+                //       widget.name,
+                //       overflow: TextOverflow.ellipsis,
+                //       style: new TextStyle(
+                //         fontSize: 18.0,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Text(
                   widget.name,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
                 ),
                 Column(
@@ -499,5 +529,134 @@ class _EnqFullDetailsPageApiState extends State<EnqFullDetailsPageApi> {
         ),
       ],
     );
+  }
+}
+
+class EnqFullDetailsBottomNavBar extends StatelessWidget {
+  const EnqFullDetailsBottomNavBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.only(bottom: Platform.isIOS ? 20 : 0),
+        decoration: const BoxDecoration(
+          color: AppTheme.colorPrimary,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            TextButton(
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    primary: AppTheme.white,
+                    backgroundColor: AppTheme.colorPrimary),
+                onPressed: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => SendMail()));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      'assets/icons/mail.png',
+                    ),
+                    color: AppTheme.white,
+                    height: 30,
+                    width: 30,
+                  ),
+                )),
+            TextButton(
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    primary: AppTheme.white,
+                    backgroundColor: AppTheme.colorPrimary),
+                onPressed: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => SendSmsPage()));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      'assets/icons/sms.png',
+                    ),
+                    color: AppTheme.white,
+                    height: 30,
+                    width: 30,
+                  ),
+                )),
+            TextButton(
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    primary: AppTheme.white,
+                    backgroundColor: AppTheme.colorPrimary),
+                onPressed: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => SendVoice()));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      'assets/icons/voice.png',
+                    ),
+                    color: AppTheme.white,
+                    height: 30,
+                    width: 30,
+                  ),
+                )),
+            TextButton(
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    primary: AppTheme.white,
+                    backgroundColor: AppTheme.colorPrimary),
+                onPressed: () {},
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      'assets/icons/phone.png',
+                    ),
+                    color: AppTheme.white,
+                    height: 30,
+                    width: 30,
+                  ),
+                )),
+            TextButton(
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    primary: AppTheme.white,
+                    backgroundColor: AppTheme.colorPrimary),
+                onPressed: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => Whatsappsend()));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      'assets/icons/whatsapp.png',
+                    ),
+                    color: AppTheme.white,
+                    height: 30,
+                    width: 30,
+                  ),
+                ))
+          ],
+        ));
   }
 }
