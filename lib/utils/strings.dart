@@ -99,7 +99,7 @@ class Strings {
   static String enter6DigitOtp =
       "Enter 6 Digit OTP which you received on given Mobile No.";
   static String success = "Success";
-  static String allCaughtUp = "You're all aught Up";
+  static String allCaughtUp = "You're all Caught Up";
   static String password = "Password";
   static String enterValidDetails = "Enter Valid Email Address & Mobile Number";
   static var loginToThisDeviceMsg =

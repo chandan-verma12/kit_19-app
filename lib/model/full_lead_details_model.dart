@@ -67,7 +67,7 @@ class Details {
   String? userLogin;
   String? followupDate;
   String? createdOn;
-  int? assignedTo;
+  String? assignedTo;
   String? remarks;
   String? followUp;
   String? followupStatus;

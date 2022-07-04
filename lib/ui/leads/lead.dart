@@ -1,14 +1,15 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kit_19/ui/add_new_lead/new_lead.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:kit_19/ui/leads/lead_details/lead_widgets.dart';
+import 'package:kit_19/ui/enquiries/enquiry.dart';
 import 'package:kit_19/ui/leads/widgets/lead_body.dart';
 import 'package:kit_19/ui/search/search_screen.dart';
 
-import 'dart:io';
 import '../../base_class.dart';
 import '../../model/nav_menu_balance.dart';
 import '../../model/user_data.dart';
@@ -20,7 +21,7 @@ import '../../utils/app_prefs.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/strings.dart';
 import '../../utils/two_button_dialog.dart';
-import '../home/home.dart';
+import '../home/dashboard.dart';
 import '../login_signup/login.dart';
 
 class Lead extends StatefulWidget {
@@ -99,8 +100,10 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
               padding: const EdgeInsets.symmetric(vertical: 15),
               icon: Image.asset("assets/icons/search.png"),
               onPressed: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => SearchScreen()));
+                Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => const SearchScreen()));
               },
             ),
             IconButton(
@@ -196,7 +199,12 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 primary: AppTheme.colorPrimary,
                                 backgroundColor: AppTheme.white),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => Dashboard()));
+                            },
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
@@ -223,10 +231,41 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
                                 primary: AppTheme.colorPrimary,
                                 backgroundColor: AppTheme.white),
                             onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     CupertinoPageRoute(
-                              //         builder: (context) => LeadsScreen()));
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => Enquiry()));
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Row(children: [
+                                  const Image(
+                                    image: AssetImage(
+                                      'assets/icons/enquiries.png',
+                                    ),
+                                    height: 28,
+                                    width: 28,
+                                  ),
+                                  getHorizontalGap(),
+                                  Text(
+                                    Strings.enquiries,
+                                    style: styleRegularColor(AppTheme.black),
+                                  )
+                                ]))),
+                        getHorizontalLine(),
+                        TextButton(
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                primary: AppTheme.colorPrimary,
+                                backgroundColor: AppTheme.white),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => Lead()));
                             },
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -242,32 +281,6 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
                                   getHorizontalGap(),
                                   Text(
                                     Strings.leads,
-                                    style: styleRegularColor(AppTheme.black),
-                                  )
-                                ]))),
-                        getHorizontalLine(),
-                        TextButton(
-                            style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                primary: AppTheme.colorPrimary,
-                                backgroundColor: AppTheme.white),
-                            onPressed: () {},
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Row(children: [
-                                  const Image(
-                                    image: AssetImage(
-                                      'assets/icons/enquiries.png',
-                                    ),
-                                    height: 28,
-                                    width: 28,
-                                  ),
-                                  getHorizontalGap(),
-                                  Text(
-                                    Strings.enquiries,
                                     style: styleRegularColor(AppTheme.black),
                                   )
                                 ]))),
@@ -513,7 +526,7 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
           spaceBetweenChildren: 10,
           icon: Icons.add,
           activeIcon: Icons.cancel_outlined,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topLeft: Radius.circular(50),
             topRight: Radius.circular(50),
@@ -521,19 +534,19 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
           )),
           children: [
             SpeedDialChild(
-              child: Icon(Icons.upload),
+              child: const Icon(Icons.upload),
               label: 'Import from XLS',
             ),
             SpeedDialChild(
-              child: Icon(Icons.download),
+              child: const Icon(Icons.download),
               label: 'Export',
             ),
             SpeedDialChild(
-              child: Icon(Icons.group),
+              child: const Icon(Icons.group),
               label: 'New Lead',
               onTap: () {
                 Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => NewLead()));
+                    CupertinoPageRoute(builder: (context) => const NewLead()));
               },
             ),
           ],

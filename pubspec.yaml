@@ -65,6 +65,7 @@ dependencies:
   flutter_beautiful_popup: ^1.7.0
   flutter_colorpicker: ^1.0.3
   expandable: ^5.0.1
+  toggle_switch: ^2.0.1
   
 
 dev_dependencies:

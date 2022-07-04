@@ -60,7 +60,7 @@ class _EnquiryListApi extends State<EnquiryListAPi> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CustomDropDown(),
+                                  CustomDropDownEnquiry(),
                                   Icon(Icons.map),
                                   SizedBox(
                                     width: 10,

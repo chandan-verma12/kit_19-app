@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:kit_19/model/lead_data.dart';
 import 'package:kit_19/ui/leads/widgets/custom_drop_down.dart';
@@ -42,7 +44,7 @@ class LeadInfo extends StatelessWidget {
                         child: Text(
                           name,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -57,7 +59,7 @@ class LeadInfo extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Container(
@@ -65,7 +67,7 @@ class LeadInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       if (username == "null")
-                        Text(" ")
+                        const Text(" ")
                       else
                         Row(
                           children: [
@@ -121,7 +123,7 @@ class LeadInfo extends StatelessWidget {
                         ],
                       )),
                       PopupMenuButton(
-                        icon: Icon(Icons.more_horiz),
+                        icon: const Icon(Icons.more_horiz),
                         iconSize: 18,
                         itemBuilder: (context) => [
                           PopupMenuItem(
@@ -204,7 +206,7 @@ class ProfileLeadNo extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           // Container(
@@ -235,7 +237,7 @@ class ProfileLeadNo extends StatelessWidget {
               child: _score(LeadDetails.thresholdColor),
             ),
           ]),
-          Text('Lead no.'),
+          const Text('Lead no.'),
           Text(leadno),
         ],
       ),
@@ -247,37 +249,38 @@ Widget _status(duedate) {
   if (duedate == "Due Today") {
     return Text(
       duedate,
-      style: TextStyle(
+      style: const TextStyle(
           color: Colors.brown, fontSize: 14, fontWeight: FontWeight.bold),
     );
   } else if (duedate == "Over Due") {
     return Text(
       duedate,
-      style: TextStyle(
+      style: const TextStyle(
           color: Colors.red, fontSize: 14, fontWeight: FontWeight.bold),
     );
   } else if (duedate == "No Followup") {
     return Text(
       duedate,
-      style: TextStyle(
+      style: const TextStyle(
           color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
     );
   } else if (duedate == "Scheduled") {
     return Text(
       duedate,
-      style: TextStyle(
+      style: const TextStyle(
           color: Colors.orange, fontSize: 14, fontWeight: FontWeight.bold),
     );
   } else if (duedate == "Converted") {
     return Text(
       duedate,
-      style: TextStyle(
+      style: const TextStyle(
           color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),
     );
   } else if (duedate == "null") {
-    return Text(" ");
-  } else
+    return const Text(" ");
+  } else {
     return Text(duedate);
+  }
 }
 
 Widget _score(score) {
@@ -285,38 +288,44 @@ Widget _score(score) {
     return Container(
       height: 20,
       width: 20,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+      decoration:
+          const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
       child: Text(
         LeadDetails.currentScore.toString(),
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
     );
   } else if (LeadDetails.thresholdColor == "Warm") {
     return Container(
       height: 20,
       width: 20,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.orange),
+      decoration:
+          const BoxDecoration(shape: BoxShape.circle, color: Colors.orange),
       child: Text(LeadDetails.currentScore.toString()),
     );
   } else if (LeadDetails.thresholdColor == "Hot") {
     return Container(
       height: 20,
       width: 20,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+      decoration:
+          const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
       child: Text(LeadDetails.currentScore.toString()),
     );
   } else if (LeadDetails.thresholdColor == "Default") {
     return Container(
       height: 20,
       width: 20,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+      decoration:
+          const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
       child: Text(LeadDetails.currentScore.toString()),
     );
-  } else
+  } else {
     return Container(
       height: 20,
       width: 20,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+      decoration:
+          const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
       child: Center(child: Text(LeadDetails.currentScore.toString())),
     );
+  }
 }

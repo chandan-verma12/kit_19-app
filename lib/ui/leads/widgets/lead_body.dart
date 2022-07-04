@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:kit_19/model/LeadModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:kit_19/model/user_data.dart';
-import 'package:kit_19/ui/leads/lead_details/lead_details.dart';
 import 'package:kit_19/ui/leads/lead_details/lead_widgets.dart';
 import 'package:kit_19/ui/leads/widgets/lead_info.dart';
 
-import '../../../model/full_lead_details_model.dart';
 import 'custom_drop_down.dart';
 
 class LeadListAPi extends StatefulWidget {
+  const LeadListAPi({Key? key}) : super(key: key);
+
   _LeadListApi createState() => _LeadListApi();
 }
 
@@ -31,7 +33,7 @@ class _LeadListApi extends State<LeadListAPi> {
         child: SafeArea(
           child: Builder(
             builder: (context) => Container(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +58,7 @@ class _LeadListApi extends State<LeadListAPi> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: [
+                                children: const [
                                   CustomDropDown(),
                                   Icon(Icons.map),
                                   SizedBox(
@@ -64,7 +66,7 @@ class _LeadListApi extends State<LeadListAPi> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               for (var i = 0; i < len; i++) ...[
@@ -111,7 +113,7 @@ class _LeadListApi extends State<LeadListAPi> {
                                         .toString(),
                                   ),
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                   color: Colors.black,
                                 ),
@@ -122,7 +124,7 @@ class _LeadListApi extends State<LeadListAPi> {
                           return Text("${snapshot.error}");
                         }
                         // By default, show a loading spinner
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       },
                     ),
                   ),
@@ -133,8 +135,6 @@ class _LeadListApi extends State<LeadListAPi> {
         ),
       ),
     );
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }
 
@@ -176,7 +176,6 @@ class servicewrapper {
     print(" url call from " + url);
     if (response.statusCode == 200) {
       print('url hit successful' + response.body);
-      String data = response.body;
 
       return LeadListModel.fromJson(json.decode(response.body));
     } else {

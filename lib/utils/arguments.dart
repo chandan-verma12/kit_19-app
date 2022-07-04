@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class Arguments {
   static const String TITLE = "title";
   static const String URL = "url";

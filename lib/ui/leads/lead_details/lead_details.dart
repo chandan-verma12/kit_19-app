@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:kit_19/model/LeadModel.dart';
-import 'package:kit_19/model/lead_data.dart';
 import 'package:kit_19/ui/leads/lead_details/lead_details_body.dart';
 
 import '../../../model/full_lead_details_model.dart';
 import '../../../model/user_data.dart';
 import '../../../utils/app_theme.dart';
+import '../lead_send_mail.dart';
+import '../lead_send_sms.dart';
 
 class BasicDetailsPage extends StatefulWidget {
   BasicDetailsPage({
@@ -50,6 +50,22 @@ class _BasicDetailsPageState extends State<BasicDetailsPage> {
                             print(" show data on screen " +
                                 snapshot.data.toString());
                             var len = snapshot.data!.details!.length;
+                            LeadDetailsCommon.name = snapshot
+                                .data!.details![0].personName
+                                .toString();
+                            LeadDetailsCommon.email1 =
+                                snapshot.data!.details![0].emailID1.toString();
+                            LeadDetailsCommon.email2 =
+                                snapshot.data!.details![0].emailID2.toString();
+                            LeadDetailsCommon.email3 =
+                                snapshot.data!.details![0].emailID3.toString();
+                            LeadDetailsCommon.mobile1 =
+                                snapshot.data!.details![0].mobileNo1.toString();
+                            LeadDetailsCommon.mobile2 =
+                                snapshot.data!.details![0].mobileNo2.toString();
+                            LeadDetailsCommon.mobile3 =
+                                snapshot.data!.details![0].mobileNo3.toString();
+                            LeadDetailsCommon.leadidcommon = widget.id;
                             return BasicDetailsApi(
                               address:
                                   snapshot.data!.details![0].address.toString(),
@@ -71,7 +87,8 @@ class _BasicDetailsPageState extends State<BasicDetailsPage> {
                             return Text("${snapshot.error}");
                           }
                           // By default, show a loading spinner
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -99,8 +116,8 @@ class LeadFullDetailsFAButton extends StatelessWidget {
       spacing: 1,
       icon: Icons.list,
       activeIcon: Icons.cancel,
-      childPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-      shape: RoundedRectangleBorder(
+      childPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
         topLeft: Radius.circular(50),
         topRight: Radius.circular(50),
@@ -114,7 +131,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
               shape: BoxShape.rectangle,
               border: Border.all(color: Colors.black),
             ),
-            child: Center(child: Text('Webform')),
+            child: const Center(child: Text('Webform')),
           ),
         ),
         SpeedDialChild(
@@ -124,7 +141,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add Invoice'))),
+              child: const Center(child: Text('Add Invoice'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -133,7 +150,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add quotation'))),
+              child: const Center(child: Text('Add quotation'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -142,7 +159,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add Tax Settings'))),
+              child: const Center(child: Text('Add Tax Settings'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -151,7 +168,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add Deal'))),
+              child: const Center(child: Text('Add Deal'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -160,7 +177,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add Appointment'))),
+              child: const Center(child: Text('Add Appointment'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -169,7 +186,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add Task'))),
+              child: const Center(child: Text('Add Task'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -178,7 +195,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Upload Documents'))),
+              child: const Center(child: Text('Upload Documents'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -187,7 +204,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add Notes'))),
+              child: const Center(child: Text('Add Notes'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -196,7 +213,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Add Followup'))),
+              child: const Center(child: Text('Add Followup'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -205,7 +222,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Mail'))),
+              child: const Center(child: Text('Mail'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -214,7 +231,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('Send voice'))),
+              child: const Center(child: Text('Send voice'))),
         ),
         SpeedDialChild(
           labelWidget: Container(
@@ -223,7 +240,7 @@ class LeadFullDetailsFAButton extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               width: 200,
-              child: Center(child: Text('sms'))),
+              child: const Center(child: Text('sms'))),
         ),
       ],
     );
@@ -254,7 +271,10 @@ class LeadFullDetailsBottomNavBar extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     primary: AppTheme.white,
                     backgroundColor: AppTheme.colorPrimary),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => LeadSendMail()));
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(10),
                   child: Image(
@@ -273,7 +293,12 @@ class LeadFullDetailsBottomNavBar extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     primary: AppTheme.white,
                     backgroundColor: AppTheme.colorPrimary),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => LeadSendSmsPage()));
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(10),
                   child: Image(
@@ -292,7 +317,10 @@ class LeadFullDetailsBottomNavBar extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     primary: AppTheme.white,
                     backgroundColor: AppTheme.colorPrimary),
-                onPressed: () {},
+                onPressed: () {
+                  // Navigator.push(context,
+                  //     CupertinoPageRoute(builder: (context) => SendVoice()));
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(10),
                   child: Image(
@@ -500,7 +528,8 @@ class _FullDetailsPageState extends State<FullDetailsPage> {
                             return Text("${snapshot.error}");
                           }
                           // By default, show a loading spinner
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -513,4 +542,16 @@ class _FullDetailsPageState extends State<FullDetailsPage> {
       ),
     );
   }
+}
+
+class LeadDetailsCommon {
+  static String mobile1 = "";
+  static String mobile2 = "";
+  static String mobile3 = "";
+  static String email1 = "";
+  static String email2 = "";
+  static String email3 = "";
+  static String name = "";
+  static String image = "";
+  static int leadidcommon = 0;
 }

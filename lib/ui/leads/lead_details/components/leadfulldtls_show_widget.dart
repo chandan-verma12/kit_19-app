@@ -18,15 +18,15 @@ class LeadFullDetailsFieldsShowWidget extends StatelessWidget {
           Container(
             width: 130,
             child: Text(
-              fieldname,
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              fieldname == 'null' ? '' : fieldname,
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              fielddata,
-              style: TextStyle(fontSize: 14),
+              fielddata == 'null' ? '' : fielddata,
+              style: const TextStyle(fontSize: 14),
             ),
           ),
         ],

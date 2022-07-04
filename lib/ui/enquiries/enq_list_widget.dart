@@ -35,14 +35,18 @@ class EnquiryList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
-                        child: Text(
-                          name,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
+                        child: name == 'null'
+                            ? Text('')
+                            : Text(
+                                name,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
                       ),
-                      Container(child: Text(datetime)),
+                      Container(
+                        child: datetime == 'null' ? Text('') : Text(datetime),
+                      ),
                     ],
                   ),
                 ),
@@ -59,7 +63,7 @@ class EnquiryList extends StatelessWidget {
                         width: 20,
                         height: 20,
                       ),
-                      Text(phno),
+                      phno == 'null' ? Text('') : Text(phno),
                     ],
                   ),
                 ),
@@ -78,10 +82,12 @@ class EnquiryList extends StatelessWidget {
                           ),
                           Flexible(
                             child: Container(
-                                child: Text(
-                              email,
-                              overflow: TextOverflow.ellipsis,
-                            )),
+                                child: email == 'null'
+                                    ? Text('')
+                                    : Text(
+                                        email,
+                                        overflow: TextOverflow.ellipsis,
+                                      )),
                           ),
                         ],
                       )),
@@ -138,11 +144,13 @@ class EnquiryList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
-                          child: Text(
-                        remarks,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      )),
+                          child: remarks == 'null'
+                              ? Text('')
+                              : Text(
+                                  remarks,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                )),
                     ],
                   ),
                 ),

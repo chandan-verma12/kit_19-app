@@ -1,18 +1,12 @@
 import 'dart:convert';
-
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:kit_19/model/activity_list_model.dart';
 import 'package:kit_19/model/follow_up_details_response.dart';
-import 'package:kit_19/model/follow_up_list_response.dart';
-import 'package:kit_19/model/full_lead_details_model.dart';
 import 'package:kit_19/model/user_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:kit_19/ui/follwup/add_followup.dart';
-
 import '../../../model/folloup_list_model.dart';
 import '../../../model/lead_data.dart';
 import '../../../utils/app_theme.dart';
@@ -345,23 +339,24 @@ class _FullDetailsPageApiState extends State<FullDetailsPageApi> {
               children: [
                 Text(
                   widget.name,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Row(
                   children: [
                     Text(widget.email1),
-                    Text(' '),
+                    const Text(' '),
                     Text(widget.email2),
-                    Text(' '),
+                    const Text(' '),
                     Text(widget.email3),
                   ],
                 ),
                 Row(
                   children: [
                     Text(widget.mob1),
-                    Text(' '),
+                    const Text(' '),
                     Text(widget.mob2),
-                    Text(' '),
+                    const Text(' '),
                     Text(widget.mob3),
                   ],
                 ),
@@ -494,11 +489,11 @@ class _FullDetailsPageApiState extends State<FullDetailsPageApi> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
-              Padding(
-                padding: EdgeInsets.all(10.0),
+              const Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
                   'Office Adddress',
                   style: TextStyle(
@@ -574,7 +569,7 @@ class ActivityDetailsPageState extends State<ActivityDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ExpandableTheme(
-        data: ExpandableThemeData(
+        data: const ExpandableThemeData(
           iconColor: Colors.black,
           useInkWell: true,
         ),
@@ -682,8 +677,8 @@ class ActivityDetailsCardWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(cardname,
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 18)),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 18)),
                       ),
                       ExpandableIcon(
                         theme: const ExpandableThemeData(
@@ -776,7 +771,8 @@ class _FollupHistoryExpandedWidgetapiState
                             return Text("${snapshot.error}");
                           }
                           // By default, show a loading spinner
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -814,7 +810,7 @@ class FollowupHistoryExpandedSingleWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     DateTimeWidget(datetime: datetime),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
@@ -823,12 +819,12 @@ class FollowupHistoryExpandedSingleWidget extends StatelessWidget {
                       children: [
                         Text(
                           status,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        Text(
+                        const Text(
                           'lead created',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
@@ -841,13 +837,13 @@ class FollowupHistoryExpandedSingleWidget extends StatelessWidget {
                     shape: BoxShape.rectangle),
                 child: ClipOval(
                   child: SizedBox.fromSize(
-                      size: Size.fromRadius(26), // Image radius
+                      size: const Size.fromRadius(26), // Image radius
                       child: Image.asset("assets/icons/user_place_holder.png")),
                 ),
               ),
             ],
           ),
-          Divider(
+          const Divider(
             thickness: 1,
             color: Colors.black,
           ),
@@ -882,14 +878,14 @@ class DateTimeWidget extends StatelessWidget {
                 Text(
                   date[1],
                 ),
-                Text('-'),
+                const Text('-'),
                 Text(date[2]),
               ],
             ),
           ),
           Text(
             date[0],
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
           ),
           Text(date[3]),
         ],
@@ -946,7 +942,7 @@ class _FollowupDetailspageState extends State<FollowupDetailspage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: Navigator.of(context).pop,
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
         ),
         backgroundColor: AppTheme.colorPrimary,
         title: const Text('Followup'),
@@ -965,7 +961,7 @@ class _FollowupDetailspageState extends State<FollowupDetailspage> {
                           CupertinoPageRoute(
                               builder: (context) => AddFollowUp()));
                     },
-                    child: Text(
+                    child: const Text(
                       'Add',
                       style: TextStyle(color: Colors.black),
                     ),
@@ -1029,7 +1025,8 @@ class _FollowupDetailspageState extends State<FollowupDetailspage> {
                             return Text("${snapshot.error}");
                           }
                           // By default, show a loading spinner
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -1040,7 +1037,7 @@ class _FollowupDetailspageState extends State<FollowupDetailspage> {
           ]),
         ),
       ),
-      bottomNavigationBar: LeadFullDetailsBottomNavBar(),
+      bottomNavigationBar: const LeadFullDetailsBottomNavBar(),
     );
   }
 }
@@ -1116,8 +1113,8 @@ class FollowupDetailsApi extends StatelessWidget {
               Container(
                 child: Row(
                   children: [
-                    DateTimeWidget(datetime: followupdate),
-                    SizedBox(
+                    // DateTimeWidget(datetime: followupdate),
+                    const SizedBox(
                       width: 20,
                     ),
                     Column(
@@ -1126,12 +1123,12 @@ class FollowupDetailsApi extends StatelessWidget {
                       children: [
                         Text(
                           status,
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        Text(
+                        const Text(
                           'Lead Created',
                           style: TextStyle(fontSize: 16),
                         ),
@@ -1146,23 +1143,23 @@ class FollowupDetailsApi extends StatelessWidget {
                     shape: BoxShape.rectangle),
                 child: ClipOval(
                   child: SizedBox.fromSize(
-                      size: Size.fromRadius(26), // Image radius
+                      size: const Size.fromRadius(26), // Image radius
                       child: Image.asset("assets/icons/user_place_holder.png")),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
             remarks,
             softWrap: true,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -1175,60 +1172,9 @@ class FollowupDetailsApi extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Owner',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.blueAccent),
-                                  shape: BoxShape.circle),
-                              child: ClipOval(
-                                child: SizedBox.fromSize(
-                                    size: Size.fromRadius(22), // Image radius
-                                    child: Image.asset(
-                                        "assets/icons/user_place_holder.png")),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  createname,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                Text(
-                                  createdon,
-                                  softWrap: true,
-                                  style: TextStyle(fontSize: 13),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Assignee',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -1246,7 +1192,59 @@ class FollowupDetailsApi extends StatelessWidget {
                                         "assets/icons/user_place_holder.png")),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  createname,
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                Text(
+                                  createdon,
+                                  softWrap: true,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Assignee',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blueAccent),
+                                  shape: BoxShape.circle),
+                              child: ClipOval(
+                                child: SizedBox.fromSize(
+                                    size: const Size.fromRadius(
+                                        22), // Image radius
+                                    child: Image.asset(
+                                        "assets/icons/user_place_holder.png")),
+                              ),
+                            ),
+                            const SizedBox(
                               width: 10,
                             ),
                             Column(
@@ -1255,7 +1253,7 @@ class FollowupDetailsApi extends StatelessWidget {
                               children: [
                                 Text(
                                   assigneename,
-                                  style: TextStyle(fontSize: 14),
+                                  style: const TextStyle(fontSize: 14),
                                 ),
                               ],
                             ),
@@ -1268,55 +1266,55 @@ class FollowupDetailsApi extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 'Re-Assigned',
                 style: TextStyle(fontSize: 18),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Text(
                 reassigned == 'true' ? 'Yes' : 'No',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 'Amount Paid',
                 style: TextStyle(fontSize: 18),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Text(
                 amount,
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 'Products',
                 style: TextStyle(fontSize: 18),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
-              Text(
+              const Text(
                 '',
                 style: TextStyle(fontSize: 18),
               ),
@@ -1383,7 +1381,7 @@ class _LeadActivitiesApiState extends State<LeadActivitiesApi> {
                         return Text("${snapshot.error}");
                       }
                       // By default, show a loading spinner
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     },
                   ),
                 ),
@@ -1421,11 +1419,11 @@ class LeadActivitesSingleWidget extends StatelessWidget {
                     shape: BoxShape.rectangle),
                 child: ClipOval(
                   child: SizedBox.fromSize(
-                      size: Size.fromRadius(26), // Image radius
+                      size: const Size.fromRadius(26), // Image radius
                       child: Container()),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Column(
@@ -1434,7 +1432,7 @@ class LeadActivitesSingleWidget extends StatelessWidget {
                 children: [
                   Text(
                     eventname,
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   ),
                   SizedBox(
                     width: 290,
@@ -1443,12 +1441,12 @@ class LeadActivitesSingleWidget extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
-                      style: TextStyle(fontSize: 13.0),
+                      style: const TextStyle(fontSize: 13.0),
                     ),
                   ),
                   Text(
                     datetime,
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ],
               ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:kit_19/model/LeadModel.dart';
-import 'package:kit_19/model/lead_data.dart';
 import '../model/login_data.dart';
 import '../model/user_data.dart';
 import 'app_theme.dart';

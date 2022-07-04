@@ -234,37 +234,6 @@ class _Dashboard extends BaseClass<Dashboard> implements ApiResponse {
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => Lead()));
-                            },
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Row(children: [
-                                  const Image(
-                                    image: AssetImage(
-                                      'assets/icons/leads.png',
-                                    ),
-                                    height: 28,
-                                    width: 28,
-                                  ),
-                                  getHorizontalGap(),
-                                  Text(
-                                    Strings.leads,
-                                    style: styleRegularColor(AppTheme.black),
-                                  )
-                                ]))),
-                        getHorizontalLine(),
-                        TextButton(
-                            style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                primary: AppTheme.colorPrimary,
-                                backgroundColor: AppTheme.white),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
                                       builder: (context) => Enquiry()));
                             },
                             child: Padding(
@@ -281,6 +250,37 @@ class _Dashboard extends BaseClass<Dashboard> implements ApiResponse {
                                   getHorizontalGap(),
                                   Text(
                                     Strings.enquiries,
+                                    style: styleRegularColor(AppTheme.black),
+                                  )
+                                ]))),
+                        getHorizontalLine(),
+                        TextButton(
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                primary: AppTheme.colorPrimary,
+                                backgroundColor: AppTheme.white),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => Lead()));
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Row(children: [
+                                  const Image(
+                                    image: AssetImage(
+                                      'assets/icons/leads.png',
+                                    ),
+                                    height: 28,
+                                    width: 28,
+                                  ),
+                                  getHorizontalGap(),
+                                  Text(
+                                    Strings.leads,
                                     style: styleRegularColor(AppTheme.black),
                                   )
                                 ]))),

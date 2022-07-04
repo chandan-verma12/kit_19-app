@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../ui/home/dashboard.dart';
@@ -10,6 +12,8 @@ import '../base_class.dart';
 
 class IntroSlider extends StatefulWidget {
   static String tag = 'intro_slider';
+
+  const IntroSlider({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

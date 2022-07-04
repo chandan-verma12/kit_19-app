@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AppConstants {
   static const TYPE_APPOINTMENT = 1;
   static const TYPE_TASK = 2;

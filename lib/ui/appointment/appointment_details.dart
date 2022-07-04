@@ -1,13 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../model/out_come_list.dart';
+
 import '../../model/task_details_response.dart';
 import '../../network/api_response.dart';
 import '../../utils/app_constants.dart';
-import '../../utils/arguments.dart';
+
 import '../../utils/strings.dart';
 import '../../base_class.dart';
 import '../../model/home_calendar_data.dart';
@@ -17,11 +19,13 @@ import '../../network/api_constants.dart';
 import '../../network/method.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/two_button_dialog.dart';
-import '../web_view_page.dart';
+
 import 'add_appoinments.dart';
 
 class AppointmentDetails extends StatefulWidget {
   static String tag = 'appointment_details';
+
+  AppointmentDetails({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -479,7 +483,7 @@ class _AppointmentDetails extends BaseClass<AppointmentDetails>
   @override
   void onError(String errorResponse, int responseCode, int requestCode) {
     debugPrint(
-        "Msg: ${errorResponse} Response Code ${responseCode} Request Code ${requestCode}");
+        "Msg: $errorResponse Response Code $responseCode Request Code $requestCode");
     if (isProgress) hideProgress();
     showError(errorResponse);
   }
@@ -493,7 +497,7 @@ class _AppointmentDetails extends BaseClass<AppointmentDetails>
   @override
   void onResponse(String response, int responseCode, int requestCode) {
     debugPrint(
-        "Data: ${response} Response Code ${responseCode} Request Code ${requestCode}");
+        "Data: $response Response Code $responseCode Request Code $requestCode");
     if (isProgress) hideProgress();
     var jsonData = json.decode(response);
     switch (requestCode) {
@@ -679,6 +683,7 @@ class _AppointmentDetails extends BaseClass<AppointmentDetails>
     if (result != null) {
       attachedFile = File(result.files.single.path!);
       Navigator.pop(context);
+      // ignore: avoid_print
       print(attachedFile?.path);
       print(attachedFile?.path.split("/").last);
       uploadAttachedFile();

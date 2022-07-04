@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +60,7 @@ class _AddFollowUp extends BaseClass<AddFollowUp> implements ApiResponse {
       followUpDate = "Next Status Date/Time",
       smsScheduleTime = "SMS Schedule Date & Time",
       emailScheduleTime = "Email Schedule Date & Time";
-  late DateTime startDateTime, customNotifySms, customNotifyEmail;
+  late DateTime startDateTime, customNotifySms, customNotifyEmail, startdate;
 
   @override
   void initState() {
@@ -69,6 +71,8 @@ class _AddFollowUp extends BaseClass<AddFollowUp> implements ApiResponse {
         isCallback: false,
         isConvert: false));
     followUp = followups[0];
+    startdate = DateTime.now();
+
     _etFromDate = TextEditingController();
     _etAmount = TextEditingController();
     _etProducts = TextEditingController();
@@ -82,6 +86,7 @@ class _AddFollowUp extends BaseClass<AddFollowUp> implements ApiResponse {
     });
     WidgetsFlutterBinding.ensureInitialized();
     startDateTime = DateTime.now().add(const Duration(hours: 25));
+    startdate = DateTime.now();
     customNotifySms = startDateTime.subtract(const Duration(minutes: 15));
     customNotifyEmail = startDateTime.subtract(const Duration(minutes: 15));
     //_etFromDate.text = getFormatedDateTime(startDateTime,outPutFormat: DateFormats.dd_MMM_yyyy_HH_mm_ss);
@@ -155,9 +160,11 @@ class _AddFollowUp extends BaseClass<AddFollowUp> implements ApiResponse {
                                       : AppTheme.colorRed,
                                   fontSize: 14))
                         ]))),
-      Padding(padding:const EdgeInsets.only(right: 13),child: Align(
-                    alignment: Alignment.centerRight,
-                    child: getErrorIcon(isValidLead)))
+                Padding(
+                    padding: const EdgeInsets.only(right: 13),
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: getErrorIcon(isValidLead)))
               ]),
               getHorizontalLine(height: 1)
             ],
@@ -172,14 +179,19 @@ class _AddFollowUp extends BaseClass<AddFollowUp> implements ApiResponse {
                 size: 20,
               )
             : isValidFollowup
-                ? const Padding(padding: EdgeInsets.only(right: 13),child: Icon(Icons.keyboard_arrow_down_rounded))
-                : const Padding(padding: EdgeInsets.only(right: 13),child: Icon(Icons.error_outline, color: AppTheme.colorRed)),
+                ? const Padding(
+                    padding: EdgeInsets.only(right: 13),
+                    child: Icon(Icons.keyboard_arrow_down_rounded))
+                : const Padding(
+                    padding: EdgeInsets.only(right: 13),
+                    child: Icon(Icons.error_outline, color: AppTheme.colorRed)),
         iconSize: 24,
         elevation: 16,
         underline: Container(height: 1, color: Colors.transparent),
         onChanged: (FollowUp? c) {
           setState(() {
             _etFromDate.clear();
+            startdate = startDateTime;
             followUp = c!;
             if (c.id != 0) {
               isValidFollowup = true;
@@ -242,7 +254,7 @@ class _AddFollowUp extends BaseClass<AddFollowUp> implements ApiResponse {
                 width: 24,
                 color: isValidDate ? AppTheme.colorDarkGrey : AppTheme.colorRed,
               )),
-          hintText: followUpDate,
+          hintText: startdate.toString().substring(0, 16),
           enabledBorder: underLineBorder,
           focusedBorder: underLineBorder,
         ));

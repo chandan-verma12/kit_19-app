@@ -1,10 +1,10 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kit_19/ui/appointment/add_appoinments.dart';
-import '../../model/out_come_list.dart';
 import '../../model/task_details_response.dart';
 import '../../network/api_response.dart';
 import '../../utils/app_constants.dart';

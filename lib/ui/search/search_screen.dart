@@ -17,9 +17,9 @@ class _SearchScreenState extends State<SearchScreen> {
           backgroundColor: AppTheme.colorPrimary,
           leading: IconButton(
             onPressed: Navigator.of(context).pop,
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
           ),
-          title: Text('Search All Modules'),
+          title: const Text('Search All Modules'),
           actions: [
             IconButton(
               padding: const EdgeInsets.symmetric(vertical: 15),
