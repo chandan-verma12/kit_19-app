@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:kit_19/model/LeadModel.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ import 'package:kit_19/model/user_data.dart';
 import 'package:kit_19/ui/leads/lead_details/lead_widgets.dart';
 import 'package:kit_19/ui/leads/widgets/lead_info.dart';
 
+import '../../../utils/app_theme.dart';
 import 'custom_drop_down.dart';
 
 class LeadListAPi extends StatefulWidget {
@@ -124,7 +126,23 @@ class _LeadListApi extends State<LeadListAPi> {
                           return Text("${snapshot.error}");
                         }
                         // By default, show a loading spinner
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.center,
+                            child: const SpinKitFadingCircle(
+                              color: AppTheme.white,
+                              size: 34,
+                            ),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                color: AppTheme.colorPrimary),
+                          ),
+                        );
                       },
                     ),
                   ),
