@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kit_19/model/enquiry_details.dart';
 
-import '../../../model/user_data.dart';
 import '../../../utils/app_theme.dart';
 
 class SendWhatsapp extends StatefulWidget {
@@ -323,88 +322,3 @@ class Whatsappsend extends StatelessWidget {
     );
   }
 }
-
-// Future<TemplateDataSMS> getSmsTemplatedata() async {
-//   var url = "https://services.kit19.com/UserCRM/GetSmsDltTemplate";
-
-//   final body = {
-//     "Status": "",
-//     "Message": "",
-//     "Token": UserDetails.token,
-//     "Details": {"SenderName": ApiSendData.sendname}
-//   };
-
-//   final bodyjson = json.encode(body);
-//   // pass headers parameters if any
-//   final response = await http.post(Uri.parse(url),
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8'
-//       },
-//       body: bodyjson);
-//   print(" url call from " + url);
-//   if (response.statusCode == 200) {
-//     print('url hit successful' + response.body);
-
-//     return TemplateDataSMS.fromJson(json.decode(response.body));
-//   } else {
-//     print('failed to get data');
-//     throw Exception('Failed to get data');
-//   }
-// }
-
-// Future<WhatsappListModel> getSmssenderid() async {
-//   var url =
-//       "https://services.kit19.com/UserCRM/GetConversationAsRequiredConvId";
-
-//   final body = {
-//     "Status": "",
-//     "Message": "",
-//     "Token": UserDetails.token,
-//     "Details": {"EntityName": "enquiry", "EntityId": Widget.id}
-//   };
-
-//   final bodyjson = json.encode(body);
-//   // pass headers parameters if any
-//   final response = await http.post(Uri.parse(url),
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8'
-//       },
-//       body: bodyjson);
-//   print(" url call from " + url);
-//   if (response.statusCode == 200) {
-//     print('url hit successful' + response.body);
-
-//     return WhatsappListModel.fromJson(json.decode(response.body));
-//   } else {
-//     print('failed to get data');
-//     throw Exception('Failed to get data');
-//   }
-// }
-
-// Future<WhatsappTemplateList> getSmssenderid() async {
-//   var url = "https://services.kit19.com/UserCRM/GetTempalteParameters";
-
-//   final body = {
-//     "Status": "",
-//     "Message": "",
-//     "Token": UserDetails.token,
-//     "Details": {"TemplateId": 998}
-//   };
-
-//   final bodyjson = json.encode(body);
-//   // pass headers parameters if any
-//   final response = await http.post(Uri.parse(url),
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8'
-//       },
-//       body: bodyjson);
-//   print(" url call from " + url);
-//   if (response.statusCode == 200) {
-//     print('url hit successful' + response.body);
-
-//     return WhatsappTemplateList.fromJson(json.decode(response.body));
-//   } else {
-//     print('failed to get data');
-//     throw Exception('Failed to get data');
-//   }
-// }
