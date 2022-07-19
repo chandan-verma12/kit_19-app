@@ -46,7 +46,7 @@ class _AppointmentDetails extends BaseClass<AppointmentDetails>
     super.initState();
     _etRemark = TextEditingController();
     WidgetsFlutterBinding.ensureInitialized();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callDetailsApi();
     });
   }

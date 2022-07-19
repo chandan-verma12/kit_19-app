@@ -3,13 +3,18 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kit_19/ui/add_new_lead/lead_add_new.dart';
 import 'package:kit_19/ui/add_new_lead/new_lead.dart';
-
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:kit_19/ui/enquiries/enquiry.dart';
-import 'package:kit_19/ui/leads/widgets/lead_body.dart';
-import 'package:kit_19/ui/search/search_screen.dart';
+import 'package:kit_19/ui/appointment/add_appoinments.dart';
+import 'package:kit_19/ui/calling/updated_popup.dart';
 
+import 'package:kit_19/ui/enquiries/enquiry.dart';
+import 'package:kit_19/ui/follwup/add_followup.dart';
+
+import 'package:kit_19/ui/leads/lead_list.dart';
+import 'package:kit_19/ui/notes/select_notification.dart';
+import 'package:kit_19/ui/search/search_screen.dart';
 import '../../base_class.dart';
 import '../../model/nav_menu_balance.dart';
 import '../../model/user_data.dart';
@@ -21,8 +26,11 @@ import '../../utils/app_prefs.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/strings.dart';
 import '../../utils/two_button_dialog.dart';
+
+import '../calling/native_calling.dart';
 import '../home/dashboard.dart';
 import '../login_signup/login.dart';
+import '../notes/notification_list (1).dart';
 
 class Lead extends StatefulWidget {
   static String tag = 'intro_slider';
@@ -96,21 +104,21 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
           backgroundColor: AppTheme.colorPrimary,
           elevation: 0,
           actions: [
-            IconButton(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              icon: Image.asset("assets/icons/search.png"),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => const SearchScreen()));
-              },
-            ),
-            IconButton(
-              padding: const EdgeInsets.symmetric(vertical: 13),
-              icon: Image.asset("assets/icons/user-white.png"),
-              onPressed: () {},
-            )
+            // IconButton(
+            //   padding: const EdgeInsets.symmetric(vertical: 15),
+            //   icon: Image.asset("assets/icons/search.png"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         CupertinoPageRoute(
+            //             builder: (context) => const SearchScreen()));
+            //   },
+            // ),
+            // IconButton(
+            //   padding: const EdgeInsets.symmetric(vertical: 13),
+            //   icon: Image.asset("assets/icons/user-white.png"),
+            //   onPressed: () {},
+            // )
           ],
         ),
         backgroundColor: AppTheme.white,
@@ -292,7 +300,44 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 primary: AppTheme.colorPrimary,
                                 backgroundColor: AppTheme.white),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          SelectNotification()));
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Row(children: [
+                                  const Image(
+                                    image: AssetImage(
+                                      'assets/icons/notification-bell.png',
+                                    ),
+                                    height: 28,
+                                    width: 28,
+                                  ),
+                                  getHorizontalGap(),
+                                  Text(
+                                    'Notification',
+                                    style: styleRegularColor(AppTheme.black),
+                                  )
+                                ]))),
+                        getHorizontalLine(),
+                        TextButton(
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                primary: AppTheme.colorPrimary,
+                                backgroundColor: AppTheme.white),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => SaveLead()));
+                            },
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
@@ -311,32 +356,37 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
                                   )
                                 ]))),
                         getHorizontalLine(),
-                        TextButton(
-                            style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                primary: AppTheme.colorPrimary,
-                                backgroundColor: AppTheme.white),
-                            onPressed: () {},
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Row(children: [
-                                  const Image(
-                                    image: AssetImage(
-                                      'assets/icons/settings2.png',
-                                    ),
-                                    height: 28,
-                                    width: 28,
-                                  ),
-                                  getHorizontalGap(),
-                                  Text(
-                                    Strings.settings,
-                                    style: styleRegularColor(AppTheme.black),
-                                  )
-                                ]))),
-                        getHorizontalLine(),
+                        // TextButton(
+                        //     style: TextButton.styleFrom(
+                        //         padding: EdgeInsets.zero,
+                        //         minimumSize: Size.zero,
+                        //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //         primary: AppTheme.colorPrimary,
+                        //         backgroundColor: AppTheme.white),
+                        //     onPressed: () {
+                        //       // Navigator.push(
+                        //       //     context,
+                        //       //     CupertinoPageRoute(
+                        //       //         builder: (context) => AddFollowUp()));
+                        //     },
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 10, vertical: 10),
+                        //         child: Row(children: [
+                        //           const Image(
+                        //             image: AssetImage(
+                        //               'assets/icons/settings2.png',
+                        //             ),
+                        //             height: 28,
+                        //             width: 28,
+                        //           ),
+                        //           getHorizontalGap(),
+                        //           Text(
+                        //             Strings.settings,
+                        //             style: styleRegularColor(AppTheme.black),
+                        //           )
+                        //         ]))),
+                        // getHorizontalLine(),
                         const Spacer(),
                         Container(
                             height: 60,
@@ -533,14 +583,14 @@ class _Lead extends BaseClass<Lead> implements ApiResponse {
             bottomLeft: Radius.circular(50),
           )),
           children: [
-            SpeedDialChild(
-              child: const Icon(Icons.upload),
-              label: 'Import from XLS',
-            ),
-            SpeedDialChild(
-              child: const Icon(Icons.download),
-              label: 'Export',
-            ),
+            // SpeedDialChild(
+            //   child: const Icon(Icons.upload),
+            //   label: 'Import from XLS',
+            // ),
+            // SpeedDialChild(
+            //   child: const Icon(Icons.download),
+            //   label: 'Export',
+            // ),
             SpeedDialChild(
               child: const Icon(Icons.group),
               label: 'New Lead',

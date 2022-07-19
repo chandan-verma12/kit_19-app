@@ -2,29 +2,32 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:kit_19/model/enq_full_details_model.dart';
 import 'package:kit_19/model/enquiry_details.dart';
+import 'package:kit_19/ui/calling/call_screen.dart';
 import 'package:kit_19/ui/enquiries/widgets/send_whatsapp.dart';
 import 'package:kit_19/ui/enquiries/widgets/send_mail.dart';
 import 'package:kit_19/ui/enquiries/widgets/send_sms.dart';
 import 'package:kit_19/ui/enquiries/widgets/send_voice.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/app_theme.dart';
 import '../../model/user_data.dart';
-import '../leads/lead_details/components/leadfulldtls_show_widget.dart';
+import '../leads/components/leadfulldtls_show_widget.dart';
 
 class EnquiryFullDetails extends StatelessWidget {
   EnquiryFullDetails({Key? key, required this.id}) : super(key: key);
 
   final int id;
 
-  var myMenuItems = <String>[
-    'Edit',
-    'Add/Merge to Lead',
-    'Delete',
-  ];
+  // var myMenuItems = <String>[
+  //   'Edit',
+  //   'Add/Merge to Lead',
+  //   'Delete',
+  // ];
 
   void onSelect(item) {
     switch (item) {
@@ -52,16 +55,16 @@ class EnquiryFullDetails extends StatelessWidget {
         backgroundColor: AppTheme.colorPrimary,
         title: const Text('Enquiry'),
         actions: <Widget>[
-          PopupMenuButton<String>(
-              onSelected: onSelect,
-              itemBuilder: (BuildContext context) {
-                return myMenuItems.map((String choice) {
-                  return PopupMenuItem<String>(
-                    child: Text(choice),
-                    value: choice,
-                  );
-                }).toList();
-              })
+          //   PopupMenuButton<String>(
+          //       onSelected: onSelect,
+          //       itemBuilder: (BuildContext context) {
+          //         return myMenuItems.map((String choice) {
+          //           return PopupMenuItem<String>(
+          //             child: Text(choice),
+          //             value: choice,
+          //           );
+          //         }).toList();
+          //       })
         ],
       ),
       body: EnquiryFullDetailsPage(id: id),
@@ -162,7 +165,23 @@ class _EnquiryFullDetailsPageState extends State<EnquiryFullDetailsPage> {
                           }
 
                           // By default, show a loading spinner
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              padding: EdgeInsets.zero,
+                              alignment: Alignment.center,
+                              child: SpinKitFadingCircle(
+                                color: AppTheme.white,
+                                size: 34,
+                              ),
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: AppTheme.colorPrimary),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -532,13 +551,29 @@ class _EnqFullDetailsPageApiState extends State<EnqFullDetailsPageApi> {
   }
 }
 
-class EnqFullDetailsBottomNavBar extends StatelessWidget {
+class EnqFullDetailsBottomNavBar extends StatefulWidget {
   const EnqFullDetailsBottomNavBar({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<EnqFullDetailsBottomNavBar> createState() =>
+      _EnqFullDetailsBottomNavBarState();
+}
+
+class _EnqFullDetailsBottomNavBarState
+    extends State<EnqFullDetailsBottomNavBar> {
+  @override
   Widget build(BuildContext context) {
+    openDialPad(String phoneNumber) async {
+      Uri url = Uri(scheme: "tel", path: phoneNumber);
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
+      } else {
+        print("Can't open dial pad.");
+      }
+    }
+
     return Container(
         padding: EdgeInsets.only(bottom: Platform.isIOS ? 20 : 0),
         decoration: const BoxDecoration(
@@ -622,7 +657,85 @@ class EnqFullDetailsBottomNavBar extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     primary: AppTheme.white,
                     backgroundColor: AppTheme.colorPrimary),
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(10.0))),
+                    backgroundColor: Colors.white,
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Container(
+                        height: MediaQuery.of(context).size.width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    'Connect with',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      selectedmobno = '';
+                                    });
+                                  },
+                                  icon: Icon(Icons.cancel_outlined),
+                                ),
+                              ],
+                            ),
+                            CustomEnqRadioButton(),
+                            MyStatefulWidget(),
+                            TextButton(
+                                onPressed: () {
+                                  print('button is pressed');
+                                  callpath == 1
+                                      ? openDialPad(selectedmobno.toString())
+                                      : showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            content: const Text(
+                                                'You will recieve a Call shortly'),
+                                            actions: <Widget>[
+                                              VoipCallEnquiry(),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Ok'),
+                                                child: const Text('Ok'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  child: Center(
+                                    child: Text(
+                                      'Call Now',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                  ),
+                                  color: Colors.green,
+                                ))
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(10),
                   child: Image(
@@ -642,8 +755,10 @@ class EnqFullDetailsBottomNavBar extends StatelessWidget {
                     primary: AppTheme.white,
                     backgroundColor: AppTheme.colorPrimary),
                 onPressed: () {
-                  Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => Whatsappsend()));
+                  // Navigator.push(
+                  //     context,
+                  //     CupertinoPageRoute(
+                  //         builder: (context) => SendWhatsappenq()));
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(10),

@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'dart:convert';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:kit_19/model/enquiry_details.dart';
@@ -451,7 +452,23 @@ class _BottomModalsmsTemplateListState
                         return Text("${snapshot.error}");
                       }
                       // By default, show a loading spinner
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          child: SpinKitFadingCircle(
+                            color: AppTheme.white,
+                            size: 34,
+                          ),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.colorPrimary),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -539,7 +556,23 @@ class _BottomModalSenderidListState extends State<BottomModalSenderidList> {
                         return Text("${snapshot.error}");
                       }
                       // By default, show a loading spinner
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          child: SpinKitFadingCircle(
+                            color: AppTheme.white,
+                            size: 34,
+                          ),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.colorPrimary),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -610,7 +643,23 @@ class _SMSTemplatedataapiState extends State<SMSTemplatedataapi> {
                         return Text("${snapshot.error}");
                       }
                       // By default, show a loading spinner
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          child: SpinKitFadingCircle(
+                            color: AppTheme.white,
+                            size: 34,
+                          ),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.colorPrimary),
+                        ),
+                      );
                     },
                   ),
                 ),

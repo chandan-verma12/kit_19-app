@@ -1,19 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:kit_19/model/LeadModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:kit_19/model/enq_list_model.dart';
+import 'package:kit_19/model/enquiry_details.dart';
 import 'package:kit_19/model/user_data.dart';
+import 'package:kit_19/ui/enquiries/components/custom_drop_down.dart';
 import 'package:kit_19/ui/enquiries/enq_full_details.dart';
 import 'package:kit_19/ui/enquiries/enq_list_widget.dart';
-import 'package:kit_19/ui/leads/lead_details/lead_details.dart';
-import 'package:kit_19/ui/leads/lead_details/lead_widgets.dart';
-import 'package:kit_19/ui/leads/widgets/lead_info.dart';
 
-import '../../../model/full_lead_details_model.dart';
-import '../leads/widgets/custom_drop_down.dart';
+import '../../utils/app_theme.dart';
 
 class EnquiryListAPi extends StatefulWidget {
   _EnquiryListApi createState() => _EnquiryListApi();
@@ -41,12 +39,7 @@ class _EnquiryListApi extends State<EnquiryListAPi> {
                 children: <Widget>[
                   Container(
                     child: FutureBuilder<EnquiryListModel>(
-                      // initiallly get_prodModellist is empty so you will see a progreessbar on screen
-                      // OR
-                      // you can directly call the get_datacall() function here to automatically get
-                      // data from sever and show on UI
-                      future:
-                          get_prodModellist, // here get_datacall()  can be call directly
+                      future: get_prodModellist,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var len = snapshot.data!.details!.data!.length;
@@ -60,11 +53,8 @@ class _EnquiryListApi extends State<EnquiryListAPi> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CustomDropDownEnquiry(),
-                                  Icon(Icons.map),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
+                                  EnqBottomsheetWidget(),
+                                  // Icon(Icons.map),
                                 ],
                               ),
                               SizedBox(
@@ -84,6 +74,11 @@ class _EnquiryListApi extends State<EnquiryListAPi> {
                                         ),
                                       ),
                                     );
+                                    setState(() {
+                                      EnquiryDetails.enqid = snapshot
+                                          .data!.details!.data![i].enquiryId!
+                                          .toInt();
+                                    });
                                   },
                                   child: EnquiryList(
                                     name: snapshot
@@ -117,7 +112,23 @@ class _EnquiryListApi extends State<EnquiryListAPi> {
                           return Text("${snapshot.error}");
                         }
                         // By default, show a loading spinner
-                        return Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.center,
+                            child: SpinKitFadingCircle(
+                              color: AppTheme.white,
+                              size: 34,
+                            ),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                color: AppTheme.colorPrimary),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -128,8 +139,6 @@ class _EnquiryListApi extends State<EnquiryListAPi> {
         ),
       ),
     );
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }
 

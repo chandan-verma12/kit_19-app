@@ -83,7 +83,7 @@ class Details {
   Null? budget;
   Null? dateofbirth;
   Null? dOBPAN;
-  Null? name1;
+  String? name1;
   String? name2;
   String? name3;
   Null? name4;

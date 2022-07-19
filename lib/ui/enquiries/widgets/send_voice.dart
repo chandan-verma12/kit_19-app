@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kit_19/model/dni_number_model.dart';
 import 'package:kit_19/model/user_data.dart';
 import 'package:kit_19/ui/enquiries/widgets/send_mail.dart';
@@ -422,7 +423,23 @@ class _ModalDniNumberListState extends State<ModalDniNumberList> {
                         return Text("${snapshot.error}");
                       }
                       // By default, show a loading spinner
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          child: SpinKitFadingCircle(
+                            color: AppTheme.white,
+                            size: 34,
+                          ),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.colorPrimary),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -532,7 +549,23 @@ class _ModalAppFlowListState extends State<ModalAppFlowList> {
                           return Text("${snapshot.error}");
                         }
                         // By default, show a loading spinner
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.center,
+                            child: SpinKitFadingCircle(
+                              color: AppTheme.white,
+                              size: 34,
+                            ),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                color: AppTheme.colorPrimary),
+                          ),
+                        );
                       },
                     ),
                   ),

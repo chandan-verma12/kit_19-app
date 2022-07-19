@@ -935,7 +935,8 @@ class _AddAppointment extends BaseClass<AddAppointment> implements ApiResponse {
   }
 
   void gotoPickLocation() async {
-    final r = await Navigator.pushNamed(context, PickMapLocation.tag);
+    final r = await Navigator.push(
+        context, CupertinoPageRoute(builder: (context) => PickMapLocation()));
     if (r != null) {
       final data = r as Map<String, dynamic>;
       setState(() {

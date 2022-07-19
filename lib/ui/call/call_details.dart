@@ -34,7 +34,7 @@ class _CallDetails extends BaseClass<CallLogDetails> implements ApiResponse {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _etRemark = TextEditingController();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       getOutComes();
       callDetailsApi();
     });

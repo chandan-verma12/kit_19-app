@@ -31,7 +31,7 @@ class _FollowupDetails extends BaseClass<FollowupDetails>
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callDetailsApi();
     });
   }

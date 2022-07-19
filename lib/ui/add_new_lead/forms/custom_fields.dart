@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kit_19/model/custom_fields_model.dart';
 import 'package:kit_19/model/user_data.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../utils/app_theme.dart';
 
 class CustomFormFields extends StatefulWidget {
   const CustomFormFields({Key? key}) : super(key: key);
@@ -42,29 +45,34 @@ class _CustomFormFieldsState extends State<CustomFormFields> {
                           return Column(
                             children: [
                               for (var i = 0; i < len; i++) ...[
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      hintText: snapshot
-                                          .data!.details![i].displayName
-                                          .toString(),
-                                      labelText: snapshot
-                                          .data!.details![i].displayName
-                                          .toString(),
-                                      floatingLabelBehavior:
-                                          FloatingLabelBehavior.always,
+                                if (snapshot.data!.details![i].isVisible ==
+                                    false) ...[
+                                  Container(),
+                                ] else ...[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        hintText: snapshot
+                                            .data!.details![i].displayName
+                                            .toString(),
+                                        labelText: snapshot
+                                            .data!.details![i].displayName
+                                            .toString(),
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.always,
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {});
+                                      },
                                     ),
-                                    onChanged: (value) {
-                                      setState(() {});
-                                    },
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
                               ],
                             ],
                           );
@@ -72,7 +80,23 @@ class _CustomFormFieldsState extends State<CustomFormFields> {
                           return Text("${snapshot.error}");
                         }
                         // By default, show a loading spinner
-                        return Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.center,
+                            child: SpinKitFadingCircle(
+                              color: AppTheme.white,
+                              size: 34,
+                            ),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                color: AppTheme.colorPrimary),
+                          ),
+                        );
                       },
                     ),
                   ),

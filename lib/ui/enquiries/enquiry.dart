@@ -6,6 +6,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:kit_19/ui/enquiries/enq_list.dart';
 import 'package:kit_19/ui/home/dashboard.dart';
 import 'package:kit_19/ui/leads/lead.dart';
+import 'package:kit_19/ui/notes/select_notification.dart';
 import 'package:kit_19/ui/search/search_screen.dart';
 
 import '../../base_class.dart';
@@ -20,6 +21,8 @@ import '../../utils/app_theme.dart';
 import '../../utils/strings.dart';
 import '../../utils/two_button_dialog.dart';
 import '../login_signup/login.dart';
+
+import '../notes/notification_list (1).dart';
 import 'new_enquiry.dart';
 
 class Enquiry extends StatefulWidget {
@@ -96,19 +99,19 @@ class _Enquiry extends BaseClass<Enquiry> implements ApiResponse {
           backgroundColor: AppTheme.colorPrimary,
           elevation: 0,
           actions: [
-            IconButton(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              icon: Image.asset("assets/icons/search.png"),
-              onPressed: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => SearchScreen()));
-              },
-            ),
-            IconButton(
-              padding: const EdgeInsets.symmetric(vertical: 13),
-              icon: Image.asset("assets/icons/user-white.png"),
-              onPressed: () {},
-            )
+            // IconButton(
+            //   padding: const EdgeInsets.symmetric(vertical: 15),
+            //   icon: Image.asset("assets/icons/search.png"),
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         CupertinoPageRoute(builder: (context) => SearchScreen()));
+            //   },
+            // ),
+            // IconButton(
+            //   padding: const EdgeInsets.symmetric(vertical: 13),
+            //   icon: Image.asset("assets/icons/user-white.png"),
+            //   onPressed: () {},
+            // )
           ],
         ),
         backgroundColor: AppTheme.white,
@@ -290,51 +293,83 @@ class _Enquiry extends BaseClass<Enquiry> implements ApiResponse {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 primary: AppTheme.colorPrimary,
                                 backgroundColor: AppTheme.white),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          SelectNotification()));
+                            },
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 child: Row(children: [
                                   const Image(
                                     image: AssetImage(
-                                      'assets/icons/callLog.png',
+                                      'assets/icons/notification-bell.png',
                                     ),
                                     height: 28,
                                     width: 28,
                                   ),
                                   getHorizontalGap(),
                                   Text(
-                                    Strings.callLog,
+                                    'Notification',
                                     style: styleRegularColor(AppTheme.black),
                                   )
                                 ]))),
                         getHorizontalLine(),
-                        TextButton(
-                            style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                primary: AppTheme.colorPrimary,
-                                backgroundColor: AppTheme.white),
-                            onPressed: () {},
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Row(children: [
-                                  const Image(
-                                    image: AssetImage(
-                                      'assets/icons/settings2.png',
-                                    ),
-                                    height: 28,
-                                    width: 28,
-                                  ),
-                                  getHorizontalGap(),
-                                  Text(
-                                    Strings.settings,
-                                    style: styleRegularColor(AppTheme.black),
-                                  )
-                                ]))),
-                        getHorizontalLine(),
+                        // TextButton(
+                        //     style: TextButton.styleFrom(
+                        //         padding: EdgeInsets.zero,
+                        //         minimumSize: Size.zero,
+                        //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //         primary: AppTheme.colorPrimary,
+                        //         backgroundColor: AppTheme.white),
+                        //     onPressed: () {},
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 10, vertical: 10),
+                        //         child: Row(children: [
+                        //           const Image(
+                        //             image: AssetImage(
+                        //               'assets/icons/callLog.png',
+                        //             ),
+                        //             height: 28,
+                        //             width: 28,
+                        //           ),
+                        //           getHorizontalGap(),
+                        //           Text(
+                        //             Strings.callLog,
+                        //             style: styleRegularColor(AppTheme.black),
+                        //           )
+                        //         ]))),
+                        // getHorizontalLine(),
+                        // TextButton(
+                        //     style: TextButton.styleFrom(
+                        //         padding: EdgeInsets.zero,
+                        //         minimumSize: Size.zero,
+                        //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //         primary: AppTheme.colorPrimary,
+                        //         backgroundColor: AppTheme.white),
+                        //     onPressed: () {},
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 10, vertical: 10),
+                        //         child: Row(children: [
+                        //           const Image(
+                        //             image: AssetImage(
+                        //               'assets/icons/settings2.png',
+                        //             ),
+                        //             height: 28,
+                        //             width: 28,
+                        //           ),
+                        //           getHorizontalGap(),
+                        //           Text(
+                        //             Strings.settings,
+                        //             style: styleRegularColor(AppTheme.black),
+                        //           )
+                        //         ]))),
+                        // getHorizontalLine(),
                         const Spacer(),
                         Container(
                             height: 60,
@@ -531,14 +566,14 @@ class _Enquiry extends BaseClass<Enquiry> implements ApiResponse {
             bottomLeft: Radius.circular(50),
           )),
           children: [
-            SpeedDialChild(
-              child: Icon(Icons.upload),
-              label: 'Import from XLS',
-            ),
-            SpeedDialChild(
-              child: Icon(Icons.download),
-              label: 'Export',
-            ),
+            // SpeedDialChild(
+            //   child: Icon(Icons.upload),
+            //   label: 'Import from XLS',
+            // ),
+            // SpeedDialChild(
+            //   child: Icon(Icons.download),
+            //   label: 'Export',
+            // ),
             SpeedDialChild(
               child: Icon(Icons.group),
               label: 'New Enquiry',

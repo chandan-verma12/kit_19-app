@@ -70,7 +70,7 @@ class _Home extends BaseClass<Home> implements ApiResponse {
     _firstDay = DateTime.utc(_selectedDay.year, 01, 01);
     _lastDay = DateTime.utc(_selectedDay.year, 12, 31);
     _currentMonth = getFormatedDateTime(DateTime.now());
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callHomeApi(_selectedDay);
 /*       Future.delayed(const Duration(milliseconds: 100), () {
         //callHomeApi(DateTime.utc(2022, 03, 13)); //13 Mar 2022

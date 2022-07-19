@@ -66,6 +66,18 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   expandable: ^5.0.1
   toggle_switch: ^2.0.1
+  flutter_callkit_incoming: ^1.0.2+1
+  system_alert_window: ^1.1.1
+  share_plus: ^4.0.10
+  pigeon: ^3.2.3
+  uuid: ^3.0.6
+  phone_state: ^1.0.1
+  permission_handler: ^10.0.0
+  flutter_overlay_apps: ^1.0.1
+  external_app_launcher: ^3.0.0
+  path_provider: ^2.0.11
+  open_file: ^3.2.1
+  
   
 
 dev_dependencies:

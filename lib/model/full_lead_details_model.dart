@@ -1,28 +1,24 @@
-class FullLeadDetails {
+class FullLeadDetailsModel {
   int? status;
   String? message;
   int? locationTrackingFrequency;
   String? timsStamp;
-  List<Details>? details;
+  Details? details;
 
-  FullLeadDetails(
+  FullLeadDetailsModel(
       {this.status,
       this.message,
       this.locationTrackingFrequency,
       this.timsStamp,
       this.details});
 
-  FullLeadDetails.fromJson(Map<String, dynamic> json) {
+  FullLeadDetailsModel.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
     message = json['Message'];
     locationTrackingFrequency = json['LocationTrackingFrequency'];
     timsStamp = json['TimsStamp'];
-    if (json['Details'] != null) {
-      details = <Details>[];
-      json['Details'].forEach((v) {
-        details!.add(new Details.fromJson(v));
-      });
-    }
+    details =
+        json['Details'] != null ? new Details.fromJson(json['Details']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -32,76 +28,252 @@ class FullLeadDetails {
     data['LocationTrackingFrequency'] = this.locationTrackingFrequency;
     data['TimsStamp'] = this.timsStamp;
     if (this.details != null) {
-      data['Details'] = this.details!.map((v) => v.toJson()).toList();
+      data['Details'] = this.details!.toJson();
     }
     return data;
   }
 }
 
 class Details {
-  int? leadId;
-  int? leadNo;
+  PredefinedFields? predefinedFields;
+  CustomFields? customFields;
+  List<DealStageList>? dealStageList;
+
+  Details({this.predefinedFields, this.customFields, this.dealStageList});
+
+  Details.fromJson(Map<String, dynamic> json) {
+    predefinedFields = json['PredefinedFields'] != null
+        ? new PredefinedFields.fromJson(json['PredefinedFields'])
+        : null;
+    customFields = json['CustomFields'] != null
+        ? new CustomFields.fromJson(json['CustomFields'])
+        : null;
+    if (json['dealStageList'] != null) {
+      dealStageList = <DealStageList>[];
+      json['dealStageList'].forEach((v) {
+        dealStageList!.add(new DealStageList.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.predefinedFields != null) {
+      data['PredefinedFields'] = this.predefinedFields!.toJson();
+    }
+    if (this.customFields != null) {
+      data['CustomFields'] = this.customFields!.toJson();
+    }
+    if (this.dealStageList != null) {
+      data['dealStageList'] =
+          this.dealStageList!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class PredefinedFields {
+  String? leadNo;
   String? personName;
   String? companyName;
+  String? countryCode;
   String? countryCode1;
-  String? mobileNo1;
   String? countryCode2;
+  String? mobileNo;
+  String? mobileNo1;
   String? mobileNo2;
-  String? countryCode3;
-  String? mobileNo3;
+  String? emailID;
   String? emailID1;
   String? emailID2;
-  String? emailID3;
   String? city;
   String? state;
   String? country;
-  int? pincode;
+  String? pinCode;
   String? residentialAddress;
-  String? officeAddress;
-  String? address;
+  String? assignedTo;
   String? sourceName;
   String? mediumName;
   String? campaignName;
-  String? initialRemarks;
-  int? parentId;
-  String? userLogin;
-  String? followupDate;
-  String? createdOn;
-  String? assignedTo;
-  String? remarks;
-  String? followUp;
+  String? remark;
   String? followupStatus;
-  String? assignedUser;
+  String? createdOn;
+  String? modifiedon;
+  String? followupdate;
+  String? createdBy;
+  String? modifiedBy;
+  String? officeaddress;
+  String? countrycode3;
+  String? assignId;
+  String? sourceId;
+  String? mediumId;
+  String? campId;
+  String? followStatusId;
+  String? products;
+  String? amountPaid;
   String? imgExt;
-  String? profileImgFileName;
-  String? statusHtml;
-  String? abcd;
-  String? alpha;
-  String? anotherAcceptTermCondition;
-  String? anotherAddress;
-  String? anotherAge;
-  String? anotherBranch;
-  String? anotherDateOfBirth;
-  String? anotherGenderField;
-  String? anotherHobby;
-  String? anotherName;
-  String? budget;
-  String? dateofbirth;
-  String? dOBPAN;
+  String? initialRemarks;
+  String? whereAddress;
+  String? latitude;
+  String? longitude;
+  String? tagNames;
+
+  PredefinedFields(
+      {this.leadNo,
+      this.personName,
+      this.companyName,
+      this.countryCode,
+      this.countryCode1,
+      this.countryCode2,
+      this.mobileNo,
+      this.mobileNo1,
+      this.mobileNo2,
+      this.emailID,
+      this.emailID1,
+      this.emailID2,
+      this.city,
+      this.state,
+      this.country,
+      this.pinCode,
+      this.residentialAddress,
+      this.assignedTo,
+      this.sourceName,
+      this.mediumName,
+      this.campaignName,
+      this.remark,
+      this.followupStatus,
+      this.createdOn,
+      this.modifiedon,
+      this.followupdate,
+      this.createdBy,
+      this.modifiedBy,
+      this.officeaddress,
+      this.countrycode3,
+      this.assignId,
+      this.sourceId,
+      this.mediumId,
+      this.campId,
+      this.followStatusId,
+      this.products,
+      this.amountPaid,
+      this.imgExt,
+      this.initialRemarks,
+      this.whereAddress,
+      this.latitude,
+      this.longitude,
+      this.tagNames});
+
+  PredefinedFields.fromJson(Map<String, dynamic> json) {
+    leadNo = json['LeadNo'];
+    personName = json['PersonName'];
+    companyName = json['CompanyName'];
+    countryCode = json['CountryCode'];
+    countryCode1 = json['CountryCode1'];
+    countryCode2 = json['CountryCode2'];
+    mobileNo = json['MobileNo'];
+    mobileNo1 = json['MobileNo1'];
+    mobileNo2 = json['MobileNo2'];
+    emailID = json['EmailID'];
+    emailID1 = json['EmailID1'];
+    emailID2 = json['EmailID2'];
+    city = json['City'];
+    state = json['State'];
+    country = json['Country'];
+    pinCode = json['PinCode'];
+    residentialAddress = json['ResidentialAddress'];
+    assignedTo = json['AssignedTo'];
+    sourceName = json['SourceName'];
+    mediumName = json['MediumName'];
+    campaignName = json['CampaignName'];
+    remark = json['remark'];
+    followupStatus = json['FollowupStatus'];
+    createdOn = json['CreatedOn'];
+    modifiedon = json['modifiedon'];
+    followupdate = json['followupdate'];
+    createdBy = json['CreatedBy'];
+    modifiedBy = json['ModifiedBy'];
+    officeaddress = json['officeaddress'];
+    countrycode3 = json['countrycode3'];
+    assignId = json['assign_id'];
+    sourceId = json['source_id'];
+    mediumId = json['medium_id'];
+    campId = json['camp_id'];
+    followStatusId = json['follow_status_id'];
+    products = json['Products'];
+    amountPaid = json['AmountPaid'];
+    imgExt = json['img_ext'];
+    initialRemarks = json['InitialRemarks'];
+    whereAddress = json['WhereAddress'];
+    latitude = json['Latitude'];
+    longitude = json['Longitude'];
+    tagNames = json['TagNames'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['LeadNo'] = this.leadNo;
+    data['PersonName'] = this.personName;
+    data['CompanyName'] = this.companyName;
+    data['CountryCode'] = this.countryCode;
+    data['CountryCode1'] = this.countryCode1;
+    data['CountryCode2'] = this.countryCode2;
+    data['MobileNo'] = this.mobileNo;
+    data['MobileNo1'] = this.mobileNo1;
+    data['MobileNo2'] = this.mobileNo2;
+    data['EmailID'] = this.emailID;
+    data['EmailID1'] = this.emailID1;
+    data['EmailID2'] = this.emailID2;
+    data['City'] = this.city;
+    data['State'] = this.state;
+    data['Country'] = this.country;
+    data['PinCode'] = this.pinCode;
+    data['ResidentialAddress'] = this.residentialAddress;
+    data['AssignedTo'] = this.assignedTo;
+    data['SourceName'] = this.sourceName;
+    data['MediumName'] = this.mediumName;
+    data['CampaignName'] = this.campaignName;
+    data['remark'] = this.remark;
+    data['FollowupStatus'] = this.followupStatus;
+    data['CreatedOn'] = this.createdOn;
+    data['modifiedon'] = this.modifiedon;
+    data['followupdate'] = this.followupdate;
+    data['CreatedBy'] = this.createdBy;
+    data['ModifiedBy'] = this.modifiedBy;
+    data['officeaddress'] = this.officeaddress;
+    data['countrycode3'] = this.countrycode3;
+    data['assign_id'] = this.assignId;
+    data['source_id'] = this.sourceId;
+    data['medium_id'] = this.mediumId;
+    data['camp_id'] = this.campId;
+    data['follow_status_id'] = this.followStatusId;
+    data['Products'] = this.products;
+    data['AmountPaid'] = this.amountPaid;
+    data['img_ext'] = this.imgExt;
+    data['InitialRemarks'] = this.initialRemarks;
+    data['WhereAddress'] = this.whereAddress;
+    data['Latitude'] = this.latitude;
+    data['Longitude'] = this.longitude;
+    data['TagNames'] = this.tagNames;
+    return data;
+  }
+}
+
+class CustomFields {
   String? name1;
   String? name2;
   String? name3;
   String? name4;
-  String? nAMEONE;
-  String? newfield;
-  String? nEWMOBILE;
-  String? project;
+  String? test12;
   String? test06;
   String? test07;
   String? test08;
-  String? test10;
   String? test11;
-  String? test12;
+  String? test10;
+  String? dateofbirth;
+  String? budget;
+  String? project;
+  String? alpha;
+  String? yujhu;
+  String? newfield;
   String? test13;
   String? test14;
   String? test15;
@@ -116,6 +288,7 @@ class Details {
   String? test24;
   String? test25;
   String? test26;
+  String? test36;
   String? test27;
   String? test28;
   String? test29;
@@ -125,79 +298,38 @@ class Details {
   String? test33;
   String? test34;
   String? test35;
-  String? test36;
   String? uNGALI;
   String? yes;
-  String? yujhu;
-  String? profitLoss;
-  String? currentScore;
-  String? thresholdColor;
-  String? assignedTo1;
+  String? abcd;
+  String? dOBPAN;
+  String? nEWMOBILE;
+  String? nAMEONE;
+  String? anotherName;
+  String? anotherAddress;
+  String? anotherAge;
+  String? anotherDateOfBirth;
+  String? anotherGenderField;
+  String? anotherAcceptTermCondition;
+  String? anotherBranch;
+  String? anotherHobby;
 
-  Details(
-      {this.leadId,
-      this.leadNo,
-      this.personName,
-      this.companyName,
-      this.countryCode1,
-      this.mobileNo1,
-      this.countryCode2,
-      this.mobileNo2,
-      this.countryCode3,
-      this.mobileNo3,
-      this.emailID1,
-      this.emailID2,
-      this.emailID3,
-      this.city,
-      this.state,
-      this.country,
-      this.pincode,
-      this.residentialAddress,
-      this.officeAddress,
-      this.address,
-      this.sourceName,
-      this.mediumName,
-      this.campaignName,
-      this.initialRemarks,
-      this.parentId,
-      this.userLogin,
-      this.followupDate,
-      this.createdOn,
-      this.assignedTo,
-      this.remarks,
-      this.followUp,
-      this.followupStatus,
-      this.assignedUser,
-      this.imgExt,
-      this.profileImgFileName,
-      this.statusHtml,
-      this.abcd,
-      this.alpha,
-      this.anotherAcceptTermCondition,
-      this.anotherAddress,
-      this.anotherAge,
-      this.anotherBranch,
-      this.anotherDateOfBirth,
-      this.anotherGenderField,
-      this.anotherHobby,
-      this.anotherName,
-      this.budget,
-      this.dateofbirth,
-      this.dOBPAN,
-      this.name1,
+  CustomFields(
+      {this.name1,
       this.name2,
       this.name3,
       this.name4,
-      this.nAMEONE,
-      this.newfield,
-      this.nEWMOBILE,
-      this.project,
+      this.test12,
       this.test06,
       this.test07,
       this.test08,
-      this.test10,
       this.test11,
-      this.test12,
+      this.test10,
+      this.dateofbirth,
+      this.budget,
+      this.project,
+      this.alpha,
+      this.yujhu,
+      this.newfield,
       this.test13,
       this.test14,
       this.test15,
@@ -212,6 +344,7 @@ class Details {
       this.test24,
       this.test25,
       this.test26,
+      this.test36,
       this.test27,
       this.test28,
       this.test29,
@@ -221,79 +354,38 @@ class Details {
       this.test33,
       this.test34,
       this.test35,
-      this.test36,
       this.uNGALI,
       this.yes,
-      this.yujhu,
-      this.profitLoss,
-      this.currentScore,
-      this.thresholdColor,
-      this.assignedTo1});
+      this.abcd,
+      this.dOBPAN,
+      this.nEWMOBILE,
+      this.nAMEONE,
+      this.anotherName,
+      this.anotherAddress,
+      this.anotherAge,
+      this.anotherDateOfBirth,
+      this.anotherGenderField,
+      this.anotherAcceptTermCondition,
+      this.anotherBranch,
+      this.anotherHobby});
 
-  Details.fromJson(Map<String, dynamic> json) {
-    leadId = json['LeadId'];
-    leadNo = json['LeadNo'];
-    personName = json['PersonName'];
-    companyName = json['CompanyName'];
-    countryCode1 = json['CountryCode1'];
-    mobileNo1 = json['MobileNo1'];
-    countryCode2 = json['CountryCode2'];
-    mobileNo2 = json['MobileNo2'];
-    countryCode3 = json['CountryCode3'];
-    mobileNo3 = json['MobileNo3'];
-    emailID1 = json['EmailID1'];
-    emailID2 = json['EmailID2'];
-    emailID3 = json['EmailID3'];
-    city = json['City'];
-    state = json['State'];
-    country = json['Country'];
-    pincode = json['Pincode'];
-    residentialAddress = json['ResidentialAddress'];
-    officeAddress = json['OfficeAddress'];
-    address = json['Address'];
-    sourceName = json['SourceName'];
-    mediumName = json['MediumName'];
-    campaignName = json['CampaignName'];
-    initialRemarks = json['InitialRemarks'];
-    parentId = json['ParentId'];
-    userLogin = json['User_Login'];
-    followupDate = json['FollowupDate'];
-    createdOn = json['CreatedOn'];
-    assignedTo = json['AssignedTo'];
-    remarks = json['Remarks'];
-    followUp = json['FollowUp'];
-    followupStatus = json['FollowupStatus'];
-    assignedUser = json['AssignedUser'];
-    imgExt = json['Img_Ext'];
-    profileImgFileName = json['ProfileImgFileName'];
-    statusHtml = json['StatusHtml'];
-    abcd = json['abcd'];
-    alpha = json['alpha'];
-    anotherAcceptTermCondition = json['Another-Accept-Term-Condition'];
-    anotherAddress = json['Another-Address'];
-    anotherAge = json['Another-Age'];
-    anotherBranch = json['Another-Branch'];
-    anotherDateOfBirth = json['Another-Date-of-birth'];
-    anotherGenderField = json['Another-Gender-Field'];
-    anotherHobby = json['Another-Hobby'];
-    anotherName = json['Another-Name'];
-    budget = json['Budget'];
-    dateofbirth = json['dateofbirth'];
-    dOBPAN = json['DOBPAN'];
+  CustomFields.fromJson(Map<String, dynamic> json) {
     name1 = json['Name1'];
     name2 = json['Name2'];
     name3 = json['Name3'];
     name4 = json['Name4'];
-    nAMEONE = json['NAMEONE'];
-    newfield = json['newfield'];
-    nEWMOBILE = json['NEWMOBILE'];
-    project = json['project'];
+    test12 = json['test12'];
     test06 = json['test06'];
     test07 = json['test07'];
     test08 = json['test08'];
-    test10 = json['test10'];
     test11 = json['test11'];
-    test12 = json['test12'];
+    test10 = json['test10'];
+    dateofbirth = json['dateofbirth'];
+    budget = json['Budget'];
+    project = json['project'];
+    alpha = json['alpha'];
+    yujhu = json['yujhu'];
+    newfield = json['newfield'];
     test13 = json['test13'];
     test14 = json['test14'];
     test15 = json['test15'];
@@ -308,6 +400,7 @@ class Details {
     test24 = json['test24'];
     test25 = json['test25'];
     test26 = json['test26'];
+    test36 = json['test36'];
     test27 = json['test27'];
     test28 = json['test28'];
     test29 = json['test29'];
@@ -317,81 +410,40 @@ class Details {
     test33 = json['test33'];
     test34 = json['test34'];
     test35 = json['test35'];
-    test36 = json['test36'];
     uNGALI = json['UNGALI'];
     yes = json['Yes'];
-    yujhu = json['yujhu'];
-    profitLoss = json['Profit_Loss'];
-    currentScore = json['CurrentScore'];
-    thresholdColor = json['ThresholdColor'];
-    assignedTo1 = json['AssignedTo1'];
+    abcd = json['abcd'];
+    dOBPAN = json['DOBPAN'];
+    nEWMOBILE = json['NEWMOBILE'];
+    nAMEONE = json['NAMEONE'];
+    anotherName = json['Another-Name'];
+    anotherAddress = json['Another-Address'];
+    anotherAge = json['Another-Age'];
+    anotherDateOfBirth = json['Another-Date-of-birth'];
+    anotherGenderField = json['Another-Gender-Field'];
+    anotherAcceptTermCondition = json['Another-Accept-Term-Condition'];
+    anotherBranch = json['Another-Branch'];
+    anotherHobby = json['Another-Hobby'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['LeadId'] = this.leadId;
-    data['LeadNo'] = this.leadNo;
-    data['PersonName'] = this.personName;
-    data['CompanyName'] = this.companyName;
-    data['CountryCode1'] = this.countryCode1;
-    data['MobileNo1'] = this.mobileNo1;
-    data['CountryCode2'] = this.countryCode2;
-    data['MobileNo2'] = this.mobileNo2;
-    data['CountryCode3'] = this.countryCode3;
-    data['MobileNo3'] = this.mobileNo3;
-    data['EmailID1'] = this.emailID1;
-    data['EmailID2'] = this.emailID2;
-    data['EmailID3'] = this.emailID3;
-    data['City'] = this.city;
-    data['State'] = this.state;
-    data['Country'] = this.country;
-    data['Pincode'] = this.pincode;
-    data['ResidentialAddress'] = this.residentialAddress;
-    data['OfficeAddress'] = this.officeAddress;
-    data['Address'] = this.address;
-    data['SourceName'] = this.sourceName;
-    data['MediumName'] = this.mediumName;
-    data['CampaignName'] = this.campaignName;
-    data['InitialRemarks'] = this.initialRemarks;
-    data['ParentId'] = this.parentId;
-    data['User_Login'] = this.userLogin;
-    data['FollowupDate'] = this.followupDate;
-    data['CreatedOn'] = this.createdOn;
-    data['AssignedTo'] = this.assignedTo;
-    data['Remarks'] = this.remarks;
-    data['FollowUp'] = this.followUp;
-    data['FollowupStatus'] = this.followupStatus;
-    data['AssignedUser'] = this.assignedUser;
-    data['Img_Ext'] = this.imgExt;
-    data['ProfileImgFileName'] = this.profileImgFileName;
-    data['StatusHtml'] = this.statusHtml;
-    data['abcd'] = this.abcd;
-    data['alpha'] = this.alpha;
-    data['Another-Accept-Term-Condition'] = this.anotherAcceptTermCondition;
-    data['Another-Address'] = this.anotherAddress;
-    data['Another-Age'] = this.anotherAge;
-    data['Another-Branch'] = this.anotherBranch;
-    data['Another-Date-of-birth'] = this.anotherDateOfBirth;
-    data['Another-Gender-Field'] = this.anotherGenderField;
-    data['Another-Hobby'] = this.anotherHobby;
-    data['Another-Name'] = this.anotherName;
-    data['Budget'] = this.budget;
-    data['dateofbirth'] = this.dateofbirth;
-    data['DOBPAN'] = this.dOBPAN;
     data['Name1'] = this.name1;
     data['Name2'] = this.name2;
     data['Name3'] = this.name3;
     data['Name4'] = this.name4;
-    data['NAMEONE'] = this.nAMEONE;
-    data['newfield'] = this.newfield;
-    data['NEWMOBILE'] = this.nEWMOBILE;
-    data['project'] = this.project;
+    data['test12'] = this.test12;
     data['test06'] = this.test06;
     data['test07'] = this.test07;
     data['test08'] = this.test08;
-    data['test10'] = this.test10;
     data['test11'] = this.test11;
-    data['test12'] = this.test12;
+    data['test10'] = this.test10;
+    data['dateofbirth'] = this.dateofbirth;
+    data['Budget'] = this.budget;
+    data['project'] = this.project;
+    data['alpha'] = this.alpha;
+    data['yujhu'] = this.yujhu;
+    data['newfield'] = this.newfield;
     data['test13'] = this.test13;
     data['test14'] = this.test14;
     data['test15'] = this.test15;
@@ -406,6 +458,7 @@ class Details {
     data['test24'] = this.test24;
     data['test25'] = this.test25;
     data['test26'] = this.test26;
+    data['test36'] = this.test36;
     data['test27'] = this.test27;
     data['test28'] = this.test28;
     data['test29'] = this.test29;
@@ -415,14 +468,85 @@ class Details {
     data['test33'] = this.test33;
     data['test34'] = this.test34;
     data['test35'] = this.test35;
-    data['test36'] = this.test36;
     data['UNGALI'] = this.uNGALI;
     data['Yes'] = this.yes;
-    data['yujhu'] = this.yujhu;
-    data['Profit_Loss'] = this.profitLoss;
-    data['CurrentScore'] = this.currentScore;
-    data['ThresholdColor'] = this.thresholdColor;
-    data['AssignedTo1'] = this.assignedTo1;
+    data['abcd'] = this.abcd;
+    data['DOBPAN'] = this.dOBPAN;
+    data['NEWMOBILE'] = this.nEWMOBILE;
+    data['NAMEONE'] = this.nAMEONE;
+    data['Another-Name'] = this.anotherName;
+    data['Another-Address'] = this.anotherAddress;
+    data['Another-Age'] = this.anotherAge;
+    data['Another-Date-of-birth'] = this.anotherDateOfBirth;
+    data['Another-Gender-Field'] = this.anotherGenderField;
+    data['Another-Accept-Term-Condition'] = this.anotherAcceptTermCondition;
+    data['Another-Branch'] = this.anotherBranch;
+    data['Another-Hobby'] = this.anotherHobby;
+    return data;
+  }
+}
+
+class DealStageList {
+  String? leadPipeLineStatusId;
+  String? leadId;
+  String? pipelineID;
+  String? pipeLineName;
+  String? pipeLineStageID;
+  String? pipeLineStageName;
+  double? amount;
+  double? probability;
+  String? fullName;
+  Null? owner;
+  String? profileImgFileName;
+  String? createdDate;
+  String? createdBy;
+
+  DealStageList(
+      {this.leadPipeLineStatusId,
+      this.leadId,
+      this.pipelineID,
+      this.pipeLineName,
+      this.pipeLineStageID,
+      this.pipeLineStageName,
+      this.amount,
+      this.probability,
+      this.fullName,
+      this.owner,
+      this.profileImgFileName,
+      this.createdDate,
+      this.createdBy});
+
+  DealStageList.fromJson(Map<String, dynamic> json) {
+    leadPipeLineStatusId = json['LeadPipeLineStatusId'];
+    leadId = json['LeadId'];
+    pipelineID = json['PipelineID'];
+    pipeLineName = json['PipeLineName'];
+    pipeLineStageID = json['PipeLineStageID'];
+    pipeLineStageName = json['PipeLineStageName'];
+    amount = json['Amount'];
+    probability = json['Probability'];
+    fullName = json['FullName'];
+    owner = json['Owner'];
+    profileImgFileName = json['ProfileImgFileName'];
+    createdDate = json['CreatedDate'];
+    createdBy = json['CreatedBy'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['LeadPipeLineStatusId'] = this.leadPipeLineStatusId;
+    data['LeadId'] = this.leadId;
+    data['PipelineID'] = this.pipelineID;
+    data['PipeLineName'] = this.pipeLineName;
+    data['PipeLineStageID'] = this.pipeLineStageID;
+    data['PipeLineStageName'] = this.pipeLineStageName;
+    data['Amount'] = this.amount;
+    data['Probability'] = this.probability;
+    data['FullName'] = this.fullName;
+    data['Owner'] = this.owner;
+    data['ProfileImgFileName'] = this.profileImgFileName;
+    data['CreatedDate'] = this.createdDate;
+    data['CreatedBy'] = this.createdBy;
     return data;
   }
 }

@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:kit_19/ui/add_new_lead/forms/custom_fields.dart';
 import 'package:kit_19/ui/enquiries/new_enquiry.dart';
 
+String person_name = '';
+String mobile_no1 = '';
+String mobile_no2 = '';
+String mobile_no3 = '';
+String email_id1 = '';
+String email_id2 = '';
+String email_id3 = '';
+
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({key});
 

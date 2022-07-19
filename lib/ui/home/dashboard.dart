@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:kit_19/ui/enquiries/enquiry.dart';
 
 import 'package:kit_19/ui/leads/lead.dart';
+import 'package:kit_19/ui/leads/lead_common_data.dart';
+import 'package:kit_19/ui/notes/select_notification.dart';
+
+import 'package:permission_handler/permission_handler.dart';
+import 'package:phone_state/phone_state.dart';
+import 'package:system_alert_window/system_alert_window.dart';
 
 import 'dart:io';
 import '../../base_class.dart';
@@ -17,9 +23,33 @@ import '../../utils/app_prefs.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/strings.dart';
 import '../../utils/two_button_dialog.dart';
+import '../add_new_lead/new_lead.dart';
+import '../calling/call_screen.dart';
+import '../enquiries/new_enquiry.dart';
 import '../login_signup/login.dart';
+import '../notes/notification_list (1).dart';
 import '../search/search_screen.dart';
 import 'home.dart';
+
+void callBack(String tag) {
+  WidgetsFlutterBinding.ensureInitialized();
+  print(tag);
+  switch (tag) {
+    case "Close":
+      SystemAlertWindow.closeSystemWindow(
+          prefMode: SystemWindowPrefMode.OVERLAY);
+      break;
+    case "Add Enquiry":
+      const NewEnquiry();
+      break;
+    case "Add Lead":
+      const NewLead();
+
+      break;
+    default:
+      print("OnClick event of $tag");
+  }
+}
 
 class Dashboard extends StatefulWidget {
   static String tag = 'intro_slider';
@@ -34,15 +64,117 @@ class _Dashboard extends BaseClass<Dashboard> implements ApiResponse {
   DateTime? currentBackPressTime;
   final GlobalKey<ScaffoldState> _scafoldKey = GlobalKey();
   var creditBalance = "0.0", smsBalance = "0.0", mailBalance = "0.0";
+  SystemWindowPrefMode prefMode = SystemWindowPrefMode.OVERLAY;
+  PhoneStateStatus status = PhoneStateStatus.NOTHING;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Future.delayed(const Duration(milliseconds: 100), () {
         getBalance();
       });
+      if (Platform.isIOS) setStream();
+
+      SystemAlertWindow.registerOnClickListener(callBack);
     });
+  }
+
+  void setStream() {
+    PhoneState.phoneStateStream.listen((event) {
+      setState(() {
+        if (event != null) {
+          status = event;
+          _showOverlayWindow();
+        }
+      });
+    });
+  }
+
+  void _showOverlayWindow() {
+    SystemWindowHeader header = SystemWindowHeader(
+      title: SystemWindowText(
+          text: LeadDetailsCommon.name,
+          fontSize: 10,
+          textColor: Colors.black45),
+      padding: SystemWindowPadding.setSymmetricPadding(12, 12),
+      subTitle: SystemWindowText(
+          text: selectedmobno.toString(),
+          fontSize: 14,
+          fontWeight: FontWeight.BOLD,
+          textColor: Colors.black87),
+      decoration: SystemWindowDecoration(startColor: Colors.grey[100]),
+      button: SystemWindowButton(
+        text: SystemWindowText(
+            text: "Close", fontSize: 12, textColor: Colors.black),
+        tag: "Close",
+        padding: SystemWindowPadding(left: 10, right: 10, bottom: 10, top: 10),
+        width: 0,
+        height: SystemWindowButton.WRAP_CONTENT,
+        decoration: SystemWindowDecoration(
+            startColor: Colors.white,
+            endColor: Colors.white,
+            borderWidth: 0,
+            borderRadius: 0.0),
+      ),
+    );
+
+    SystemWindowFooter footer = SystemWindowFooter(
+        buttons: [
+          SystemWindowButton(
+            text: SystemWindowText(
+                text: "Add Enquiry", fontSize: 12, textColor: Colors.black),
+            tag: "Add Enquiry",
+            padding:
+                SystemWindowPadding(left: 10, right: 10, bottom: 10, top: 10),
+            width: 0,
+            height: SystemWindowButton.WRAP_CONTENT,
+            decoration: SystemWindowDecoration(
+                startColor: Colors.white,
+                endColor: Colors.white,
+                borderWidth: 0,
+                borderRadius: 0.0),
+          ),
+          SystemWindowButton(
+            text: SystemWindowText(
+                text: "Add Lead", fontSize: 12, textColor: Colors.black),
+            tag: "Add Lead",
+            width: 0,
+            padding:
+                SystemWindowPadding(left: 10, right: 10, bottom: 10, top: 10),
+            height: SystemWindowButton.WRAP_CONTENT,
+            decoration: SystemWindowDecoration(
+                startColor: Colors.green,
+                endColor: Colors.green,
+                borderWidth: 0,
+                borderRadius: 30.0),
+          ),
+        ],
+        padding: SystemWindowPadding(left: 16, right: 16, bottom: 12),
+        decoration: SystemWindowDecoration(startColor: Colors.white),
+        buttonsPosition: ButtonPosition.CENTER);
+    SystemAlertWindow.showSystemWindow(
+        height: 230,
+        header: header,
+        footer: footer,
+        margin: SystemWindowMargin(left: 8, right: 8, top: 200, bottom: 0),
+        gravity: SystemWindowGravity.TOP,
+        notificationTitle: "Call",
+        prefMode: prefMode);
+  }
+
+  Future<bool> requestPermission() async {
+    var status = await Permission.phone.request();
+
+    switch (status) {
+      case PermissionStatus.denied:
+      case PermissionStatus.restricted:
+      case PermissionStatus.limited:
+      case PermissionStatus.permanentlyDenied:
+        return false;
+      case PermissionStatus.granted:
+        return true;
+    }
   }
 
   void showLogoutDialog() {
@@ -98,19 +230,19 @@ class _Dashboard extends BaseClass<Dashboard> implements ApiResponse {
           backgroundColor: AppTheme.colorPrimary,
           elevation: 0,
           actions: [
-            IconButton(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              icon: Image.asset("assets/icons/search.png"),
-              onPressed: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => SearchScreen()));
-              },
-            ),
-            IconButton(
-              padding: const EdgeInsets.symmetric(vertical: 13),
-              icon: Image.asset("assets/icons/user-white.png"),
-              onPressed: () {},
-            )
+            // IconButton(
+            //   padding: const EdgeInsets.symmetric(vertical: 15),
+            //   icon: Image.asset("assets/icons/search.png"),
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         CupertinoPageRoute(builder: (context) => SearchScreen()));
+            //   },
+            // ),
+            // IconButton(
+            //   padding: const EdgeInsets.symmetric(vertical: 13),
+            //   icon: Image.asset("assets/icons/user-white.png"),
+            //   onPressed: () {},
+            // )
           ],
         ),
         backgroundColor: AppTheme.white,
@@ -266,6 +398,7 @@ class _Dashboard extends BaseClass<Dashboard> implements ApiResponse {
                                   context,
                                   CupertinoPageRoute(
                                       builder: (context) => Lead()));
+                              requestPermission();
                             },
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -292,51 +425,83 @@ class _Dashboard extends BaseClass<Dashboard> implements ApiResponse {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 primary: AppTheme.colorPrimary,
                                 backgroundColor: AppTheme.white),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          SelectNotification()));
+                            },
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 child: Row(children: [
                                   const Image(
                                     image: AssetImage(
-                                      'assets/icons/callLog.png',
+                                      'assets/icons/notification-bell.png',
                                     ),
                                     height: 28,
                                     width: 28,
                                   ),
                                   getHorizontalGap(),
                                   Text(
-                                    Strings.callLog,
+                                    'Notification',
                                     style: styleRegularColor(AppTheme.black),
                                   )
                                 ]))),
                         getHorizontalLine(),
-                        TextButton(
-                            style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                primary: AppTheme.colorPrimary,
-                                backgroundColor: AppTheme.white),
-                            onPressed: () {},
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Row(children: [
-                                  const Image(
-                                    image: AssetImage(
-                                      'assets/icons/settings2.png',
-                                    ),
-                                    height: 28,
-                                    width: 28,
-                                  ),
-                                  getHorizontalGap(),
-                                  Text(
-                                    Strings.settings,
-                                    style: styleRegularColor(AppTheme.black),
-                                  )
-                                ]))),
-                        getHorizontalLine(),
+                        // TextButton(
+                        //     style: TextButton.styleFrom(
+                        //         padding: EdgeInsets.zero,
+                        //         minimumSize: Size.zero,
+                        //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //         primary: AppTheme.colorPrimary,
+                        //         backgroundColor: AppTheme.white),
+                        //     onPressed: () {},
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 10, vertical: 10),
+                        //         child: Row(children: [
+                        //           const Image(
+                        //             image: AssetImage(
+                        //               'assets/icons/callLog.png',
+                        //             ),
+                        //             height: 28,
+                        //             width: 28,
+                        //           ),
+                        //           getHorizontalGap(),
+                        //           Text(
+                        //             Strings.callLog,
+                        //             style: styleRegularColor(AppTheme.black),
+                        //           )
+                        //         ]))),
+                        // getHorizontalLine(),
+                        // TextButton(
+                        //     style: TextButton.styleFrom(
+                        //         padding: EdgeInsets.zero,
+                        //         minimumSize: Size.zero,
+                        //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //         primary: AppTheme.colorPrimary,
+                        //         backgroundColor: AppTheme.white),
+                        //     onPressed: () {},
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 10, vertical: 10),
+                        //         child: Row(children: [
+                        //           const Image(
+                        //             image: AssetImage(
+                        //               'assets/icons/settings2.png',
+                        //             ),
+                        //             height: 28,
+                        //             width: 28,
+                        //           ),
+                        //           getHorizontalGap(),
+                        //           Text(
+                        //             Strings.settings,
+                        //             style: styleRegularColor(AppTheme.black),
+                        //           )
+                        //         ]))),
+                        // getHorizontalLine(),
                         const Spacer(),
                         Container(
                             height: 60,

@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kit_19/model/lead_data.dart';
-import 'package:kit_19/ui/leads/widgets/custom_drop_down.dart';
-
-import '../../../model/user_data.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_mail.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_sms.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_voice.dart';
+import 'package:kit_19/ui/enquiries/widgets/send_whatsapp.dart';
 
 class EnquiryList extends StatelessWidget {
   const EnquiryList({
@@ -105,7 +107,12 @@ class EnquiryList extends StatelessWidget {
                                     color: Colors.black,
                                   ),
                                   iconSize: 10.0,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) => SendMail()));
+                                  },
                                 ),
                                 IconButton(
                                   icon: Image.asset(
@@ -113,7 +120,13 @@ class EnquiryList extends StatelessWidget {
                                     color: Colors.black,
                                   ),
                                   iconSize: 10.0,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) =>
+                                                SendSmsPage()));
+                                  },
                                 ),
                                 IconButton(
                                   icon: Image.asset(
@@ -121,7 +134,12 @@ class EnquiryList extends StatelessWidget {
                                     color: Colors.black,
                                   ),
                                   iconSize: 10.0,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) => SendVoice()));
+                                  },
                                 ),
                                 IconButton(
                                   icon: Image.asset(
@@ -129,7 +147,13 @@ class EnquiryList extends StatelessWidget {
                                     color: Colors.black,
                                   ),
                                   iconSize: 10.0,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     CupertinoPageRoute(
+                                    //         builder: (context) =>
+                                    //             SendWhatsappenq()));
+                                  },
                                 ),
                               ],
                             ),

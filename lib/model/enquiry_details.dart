@@ -7,4 +7,5 @@ class EnquiryDetails {
   static String email3 = "";
   static String name = "";
   static String image = "";
+  static int enqid = 0;
 }

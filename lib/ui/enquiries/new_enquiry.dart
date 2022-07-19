@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kit_19/model/source_list_model.dart';
-import 'package:kit_19/ui/add_new_lead/forms/main_fields.dart';
 import 'package:kit_19/utils/app_theme.dart';
 import 'package:http/http.dart' as http;
 
@@ -616,6 +616,14 @@ class MyCustomFormEnquiryState extends State<MyCustomFormEnquiry> {
           const SizedBox(
             height: 20,
           ),
+          Center(
+            child: IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: Icon(Icons.refresh),
+            ),
+          ),
           showall == false ? const Text('') : const CustomFormFieldsEnquiry(),
         ],
       ),
@@ -646,12 +654,7 @@ class _CustomFormFieldsEnquiryState extends State<CustomFormFieldsEnquiry> {
                 children: <Widget>[
                   Container(
                     child: FutureBuilder<CustomFeildsModel>(
-                      // initiallly get_prodModellist is empty so you will see a progreessbar on screen
-                      // OR
-                      // you can directly call the get_datacall() function here to automatically get
-                      // data from sever and show on UI
-                      future:
-                          get_CustomFieldModellist, // here get_datacall()  can be call directly
+                      future: get_CustomFieldModellist,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var len = snapshot.data!.details!.length;
@@ -760,7 +763,23 @@ class _CustomFormFieldsEnquiryState extends State<CustomFormFieldsEnquiry> {
                           return Text("${snapshot.error}");
                         }
                         // By default, show a loading spinner
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.center,
+                            child: const SpinKitFadingCircle(
+                              color: AppTheme.white,
+                              size: 34,
+                            ),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                color: AppTheme.colorPrimary),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -914,10 +933,6 @@ class _SourceListState extends State<SourceList> {
               children: <Widget>[
                 Container(
                   child: FutureBuilder<SourceListData>(
-                    // initiallly get_prodModellist is empty so you will see a progreessbar on screen
-                    // OR
-                    // you can directly call the get_datacall() function here to automatically get
-                    // data from sever and show on UI
                     future:
                         getSourceList(), // here get_datacall()  can be call directly
                     builder: (context, snapshot) {
@@ -961,8 +976,23 @@ class _SourceListState extends State<SourceList> {
                         return Text("${snapshot.error}");
                       }
                       // By default, show a loading spinner
-                      return const Center(
-                          child: const CircularProgressIndicator());
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          child: const SpinKitFadingCircle(
+                            color: AppTheme.white,
+                            size: 34,
+                          ),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.colorPrimary),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -996,12 +1026,7 @@ class _MediumListState extends State<MediumList> {
               children: <Widget>[
                 Container(
                   child: FutureBuilder<SourceListData>(
-                    // initiallly get_prodModellist is empty so you will see a progreessbar on screen
-                    // OR
-                    // you can directly call the get_datacall() function here to automatically get
-                    // data from sever and show on UI
-                    future:
-                        getMediumList(), // here get_datacall()  can be call directly
+                    future: getMediumList(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         print(
@@ -1043,8 +1068,23 @@ class _MediumListState extends State<MediumList> {
                         return Text("${snapshot.error}");
                       }
                       // By default, show a loading spinner
-                      return const Center(
-                          child: const CircularProgressIndicator());
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          child: const SpinKitFadingCircle(
+                            color: AppTheme.white,
+                            size: 34,
+                          ),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.colorPrimary),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -1078,10 +1118,6 @@ class _CampaignListState extends State<CampaignList> {
               children: <Widget>[
                 Container(
                   child: FutureBuilder<SourceListData>(
-                    // initiallly get_prodModellist is empty so you will see a progreessbar on screen
-                    // OR
-                    // you can directly call the get_datacall() function here to automatically get
-                    // data from sever and show on UI
                     future:
                         getCampaignList(), // here get_datacall()  can be call directly
                     builder: (context, snapshot) {
@@ -1125,9 +1161,24 @@ class _CampaignListState extends State<CampaignList> {
                       } else if (snapshot.hasError) {
                         return Text("${snapshot.error}");
                       }
-                      // By default, show a loading spinner
-                      return const Center(
-                          child: const CircularProgressIndicator());
+
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          child: const SpinKitFadingCircle(
+                            color: AppTheme.white,
+                            size: 34,
+                          ),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.colorPrimary),
+                        ),
+                      );
                     },
                   ),
                 ),

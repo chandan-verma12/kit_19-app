@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:system_alert_window/system_alert_window.dart';
 import '../../model/login_data.dart';
 import '../../network/api_call.dart';
 import '../../network/api_constants.dart';
@@ -70,6 +72,8 @@ class _Login extends BaseClass<Login> implements ApiResponse {
     }
   }
 
+  SystemWindowPrefMode prefMode = SystemWindowPrefMode.OVERLAY;
+
   @override
   void initState() {
     super.initState();
@@ -87,6 +91,38 @@ class _Login extends BaseClass<Login> implements ApiResponse {
         isValidPassword = true;
       });
     });
+  }
+
+  Future<bool> requestPermission1() async {
+    var status1 = await Permission.location.request();
+
+    switch (status1) {
+      case PermissionStatus.denied:
+      case PermissionStatus.restricted:
+      case PermissionStatus.limited:
+      case PermissionStatus.permanentlyDenied:
+        return false;
+      case PermissionStatus.granted:
+        return true;
+    }
+  }
+
+  Future<bool> requestPermission() async {
+    var status = await Permission.phone.request();
+
+    switch (status) {
+      case PermissionStatus.denied:
+      case PermissionStatus.restricted:
+      case PermissionStatus.limited:
+      case PermissionStatus.permanentlyDenied:
+        return false;
+      case PermissionStatus.granted:
+        return true;
+    }
+  }
+
+  Future<void> _requestPermissions() async {
+    await SystemAlertWindow.requestPermissions(prefMode: prefMode);
   }
 
   Future<void> getDeviceInfo() async {
@@ -252,6 +288,9 @@ class _Login extends BaseClass<Login> implements ApiResponse {
             backgroundColor: AppTheme.colorPrimary),
         onPressed: () {
           doLogin();
+          requestPermission();
+          _requestPermissions();
+          requestPermission1();
         });
 
     return Scaffold(
